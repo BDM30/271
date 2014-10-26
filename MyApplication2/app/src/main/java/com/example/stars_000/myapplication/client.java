@@ -18,7 +18,7 @@ public class client {
         protected Void doInBackground(Void... params) {
             try {
 
-                Socket client = new Socket("192.168.10.105", 11000); // подключаемся к серверу; 111-server: 217.197.4.107
+                Socket client = new Socket("217.197.4.107", 11000); // подключаемся к серверу; 111-server: 217.197.4.107
                 PrintWriter printwriter = new PrintWriter(client.getOutputStream(), true);
                 printwriter.write(message); // write the message to output stream
 
