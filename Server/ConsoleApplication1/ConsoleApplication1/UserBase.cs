@@ -73,7 +73,7 @@ namespace ConsoleApplication1
             amountUsers = 0;
             string line;
             System.IO.StreamReader file =
-                new System.IO.StreamReader(@"C:\Users\stars_000\Desktop\iMess\allAcounts.txt");
+                new System.IO.StreamReader(@"allAcounts.txt");
 
             while ((line = file.ReadLine()) != null)
             {
@@ -146,7 +146,7 @@ namespace ConsoleApplication1
             //Console.WriteLine(slot[0]);
             //Console.WriteLine(slot[1]);
             // System.IO.File file = new File
-            System.IO.File.WriteAllLines(@"C:\Users\stars_000\Desktop\iMess\allAcounts.txt", slot);
+            System.IO.File.WriteAllLines(@"allAcounts.txt", slot);
         }
 
 
