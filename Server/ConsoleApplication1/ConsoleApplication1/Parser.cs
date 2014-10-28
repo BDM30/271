@@ -22,15 +22,24 @@ namespace ConsoleApplication1
             TcpClient client = clientO as TcpClient; // Возьмем клиента, который к нам подключился
             NetworkStream stream = client.GetStream(); // И заберем с него байты
 
+            string answerFromServer = "This is test!"; // Это ответ, которым мы пошлем клиенту
+            string ipClient = null;
+
+
+
+
+            // Получение сообщения
             int i;
             while ((i = stream.Read(bytes, 0, bytes.Length)) != 0) // И будем переводить его байты
             {
-
-                string answerFromServer = "This is test!"; // Это ответ, которым мы пошлем клиенту
-
                 query = System.Text.Encoding.UTF8.GetString(bytes, 0, i); // Переведем байты в строку
+                ipClient = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(); // Получим айпи адресс клиента
+            }
+            client.Close();
+
+ /////////////////////////////////////////Ответ на запрос////////////////////////////////////////////////////////////////
+
                 Console.WriteLine("\nmessage:{0}", query);  // Выведем ее на экран
-                string ipClient = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(); // Получим айпи адресс клиента
                 Console.WriteLine("Client Ip Address is: {0}", ipClient); // Выведем его на экран
 
                 
@@ -117,9 +126,8 @@ namespace ConsoleApplication1
                 soc.Send(msg);
                 soc.Shutdown(SocketShutdown.Both);
                 soc.Close();    
-            }
-            client.Close();
-        
+            
+              
         }
     }
 
