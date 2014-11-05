@@ -5,4 +5,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    // custom
+    <string name="text_registration">Регистрация</string>
+    <string name="text_entrace">Войти</string>
+    <string name="text_remind">Забыли пароль?</string>
+    <string name="text_result">app out</string>
+    <string name="text_email">Е-mail</string>
+    <string name="text_password">password</string>
+
 </resources>

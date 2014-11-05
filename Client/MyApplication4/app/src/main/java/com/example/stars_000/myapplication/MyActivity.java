@@ -44,21 +44,51 @@ public class MyActivity extends Activity implements View.OnClickListener {
     EditText email;
     EditText pass;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+    private void set_onclick_action() {
+        registration.setOnClickListener(this);
+        enter.setOnClickListener(this);
+        forget.setOnClickListener(this);
+        email.setOnClickListener(this);
+        pass.setOnClickListener(this);
+    }
+
+    private void initialization() {
+        // нашли их на форме
         result = (TextView) findViewById(R.id.textview_out);
         registration = (Button) findViewById(R.id.button_registration);
         enter = (Button) findViewById(R.id.button_entrace);
         forget = (Button) findViewById(R.id.button_forget);
         email = (EditText) findViewById(R.id.edittext_email);
         pass = (EditText) findViewById(R.id.edittext_password);
-        registration.setOnClickListener(this);
-        enter.setOnClickListener(this);
-        forget.setOnClickListener(this);
-        email.setOnClickListener(this);
-        pass.setOnClickListener(this);
+
+        //вписали в них текст из ресурсом my_res.xml
+        result.setText(R.string.text_result);
+        registration.setText(R.string.text_registration);
+        enter.setText(R.string.text_entrace);
+        forget.setText(R.string.text_remind);
+        email.setText(R.string.text_email);
+        pass.setText(R.string.text_password);
+
+        // вписали в них цвета из ресурсов my_res.xml
+        enter.setBackgroundResource(R.color.color_entrace);
+        registration.setBackgroundResource(R.color.color_registration);
+        forget.setBackgroundResource(R.color.color_remind);
+
+    }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my);
+
+        // инициализируем элементы на форме
+        initialization();
+
+        // действия по клику
+        set_onclick_action();
+
 
 
     }
