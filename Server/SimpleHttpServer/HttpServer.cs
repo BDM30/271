@@ -100,7 +100,7 @@ namespace myServer
                             break;
                         case "entrace":
                             Console.WriteLine("entrace!");
-                            answer = "func=entace;";
+                            answer = "func=entrace;";
                             if (userBase.existUser(arrayNameValueEmail[1], arrayNameValuePassword[1]))
                                 answer += "result=1;";
                             else

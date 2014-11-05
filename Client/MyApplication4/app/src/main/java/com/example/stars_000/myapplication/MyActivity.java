@@ -171,7 +171,26 @@ public class MyActivity extends Activity implements View.OnClickListener {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String res) {
-            Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
+            String answer = "wrong answer";
+            ArrayList <String> good_answers = new ArrayList<String>();
+            good_answers.add("func=registration;result=1;"); // 0
+            good_answers.add("func=registration;result=0;"); // 1
+            good_answers.add("func=entrace;result=1;");      // 2
+            good_answers.add("func=entrace;result=0;");      // 3
+            good_answers.add("func=remind;result=1;");       // 4
+            good_answers.add("func=remind;result=0;");       // 5
+            int number = good_answers.indexOf(res);
+            switch(number) {
+                case 0: answer="Успешная регистарация!";  break;
+                case 1: answer="Такой пользователь уже есть!"; break;
+                case 2: answer="Добро пожаловать!"; break;
+                case 3: answer="Такого пользователя нет!"; break;
+                case 4: answer="Мы выслали ваш пароль!"; break;
+                case 5: answer="Нет такого пользователя!"; break;
+                default:
+                    answer = "Не найдено обработчика ответа!"; break;
+            }
+            Toast.makeText(getBaseContext(), answer, Toast.LENGTH_LONG).show();
             result.setText(res);
         }
     }
