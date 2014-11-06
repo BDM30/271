@@ -37,12 +37,16 @@ import java.util.List;
 
 public class MyActivity extends Activity implements View.OnClickListener {
 
+    // элементы формы
     TextView result;
     Button registration;
     Button enter;
     Button forget;
     EditText email;
     EditText pass;
+
+    //логи
+    private static final String common_view_tags = "Common view logs:";
 
     private void set_onclick_action() {
         registration.setOnClickListener(this);
@@ -54,6 +58,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
     private void initialization() {
         // нашли их на форме
+        Log.d(common_view_tags, "Нашли(инициализировали) элементы на форме");
         result = (TextView) findViewById(R.id.textview_out);
         registration = (Button) findViewById(R.id.button_registration);
         enter = (Button) findViewById(R.id.button_entrace);
@@ -62,6 +67,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
         pass = (EditText) findViewById(R.id.edittext_password);
 
         //вписали в них текст из ресурсом my_res.xml
+        Log.d(common_view_tags, "Задали текст по умолчанию");
         result.setText(R.string.text_result);
         registration.setText(R.string.text_registration);
         enter.setText(R.string.text_entrace);
@@ -70,6 +76,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
         pass.setText(R.string.text_password);
 
         // вписали в них цвета из ресурсов my_res.xml
+        Log.d(common_view_tags, "Задали цвета кнопок по умолчанию");
         enter.setBackgroundResource(R.color.color_entrace);
         registration.setBackgroundResource(R.color.color_registration);
         forget.setBackgroundResource(R.color.color_remind);
@@ -99,34 +106,30 @@ public class MyActivity extends Activity implements View.OnClickListener {
         // по id определеяем кнопку, вызвавшую этот обработчик
         switch (v.getId()) {
             case R.id.button_entrace:
-                // кнопка ОК
-               // tvOut.setText("Нажата кнопка ОК");
+                Log.d(common_view_tags, "Нажата кпока entrace");
                 result.setText("entrace!");
                 query +="entrace;"+"email="+email.getText()+";password="+pass.getText()+";";
                 new HttpAsyncTask().execute(query);
                 break;
             case R.id.button_registration:
-                // кнопка Cancel
-                //tvOut.setText("Нажата кнопка Cancel");
+                Log.d(common_view_tags, "Нажата кпока registration");
                 result.setText("registration!");
                 query +="registration;"+"email="+email.getText()+";password="+pass.getText()+";";
                 new HttpAsyncTask().execute(query);
                 break;
             case R.id.button_forget:
-                // кнопка Cancel
-                //tvOut.setText("Нажата кнопка Cancel");
+                Log.d(common_view_tags, "Нажата кпока forget");
                 query +="remind;"+"email="+email.getText()+";";
                 result.setText("forget!");
                 new HttpAsyncTask().execute(query);
                 break;
             case R.id.edittext_email:
-                // кнопка Cancel
-                //tvOut.setText("Нажата кнопка Cancel");
+                Log.d(common_view_tags, "Нажата эдит email");
+
                 email.setText("");
                 break;
             case R.id.edittext_password:
-                // кнопка Cancel
-                //tvOut.setText("Нажата кнопка Cancel");
+                Log.d(common_view_tags, "Нажата эдит password");
                 pass.setText("");
                 break;
         }
