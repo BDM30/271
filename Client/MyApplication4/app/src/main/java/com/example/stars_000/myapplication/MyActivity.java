@@ -2,9 +2,11 @@ package com.example.stars_000.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MyActivity extends Activity implements View.OnClickListener {
 
     // элементы формы
@@ -44,6 +48,15 @@ public class MyActivity extends Activity implements View.OnClickListener {
     Button forget;
     EditText email;
     EditText pass;
+
+
+    // Константы для контекстного меню. Оно определено для 3х кнопок.
+    final int MENU_COLOR_RED = 1;
+    final int MENU_COLOR_GREEN = 2;
+    final int MENU_COLOR_BLUE = 3;
+    final int MENU_SIZE_22 = 4;
+    final int MENU_SIZE_26 = 5;
+    final int MENU_SIZE_30 = 6;
 
     //логи
     private static final String common_view_tags = "Common view logs:";
@@ -81,6 +94,74 @@ public class MyActivity extends Activity implements View.OnClickListener {
         registration.setBackgroundResource(R.color.color_registration);
         forget.setBackgroundResource(R.color.color_remind);
 
+        // теперь укажем для них контекстное меню
+        Log.d(common_view_tags, "Установили костекстое меню для кнопок по умолчанию");
+        registerForContextMenu(enter);
+        registerForContextMenu(registration);
+        registerForContextMenu(forget);
+
+    }
+
+    // создали контекстное меню
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        // TODO Auto-generated method stub
+        if (v.getId() == R.id.button_registration || v.getId() == R.id.button_entrace ||
+            v.getId() == R.id.button_forget)
+        {
+            /*
+            - groupId - идентификатор группы, частью которой является пункт меню
+            - itemId - ID пункта меню
+            - order - для задания последовательности показа пунктов меню
+            - title - текст, который будет отображен
+            костанты определны выше
+            */
+            menu.add(0, MENU_COLOR_RED, 0, "Red");
+            menu.add(0, MENU_COLOR_GREEN, 0, "Green");
+            menu.add(0, MENU_COLOR_BLUE, 0, "Blue");
+            menu.add(0, MENU_SIZE_22, 0, "22");
+            menu.add(0, MENU_SIZE_26, 0, "26");
+            menu.add(0, MENU_SIZE_30, 0, "30");
+        }
+    }
+
+    // а теперь будет обрабатывать его.
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch (item.getItemId()) {
+            // пункты меню для tvColor
+            case MENU_COLOR_RED:
+                enter.setTextColor(Color.RED);
+                registration.setTextColor(Color.RED);
+                forget.setTextColor(Color.RED);
+                break;
+            case MENU_COLOR_GREEN:
+                enter.setTextColor(Color.GREEN);
+                registration.setTextColor(Color.GREEN);
+                forget.setTextColor(Color.GREEN);
+                break;
+            case MENU_COLOR_BLUE:
+                enter.setTextColor(Color.BLUE);
+                registration.setTextColor(Color.BLUE);
+                forget.setTextColor(Color.BLUE);
+                break;
+            // пункты меню для tvSize
+            case MENU_SIZE_22:
+                email.setTextSize(22);
+                pass.setTextSize(22);
+                break;
+            case MENU_SIZE_26:
+                email.setTextSize(26);
+                pass.setTextSize(26);
+                break;
+            case MENU_SIZE_30:
+                email.setTextSize(30);
+                pass.setTextSize(30);
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
 
@@ -101,6 +182,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    // оправляем запросы серваку и получаем ответы на них
     public void onClick(View v) {
         String query = "http://217.197.2.70:11000/func=";
         // по id определеяем кнопку, вызвавшую этот обработчик
