@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by Colored Lime on 24.10.2014.
  */
@@ -35,9 +37,19 @@ public class Registration extends Activity implements View.OnClickListener{
             case R.id.reg_btn:
                 email = email_edit.getText().toString();
                 password = password_edit.getText().toString();
-                client.SendMessage.message = "func=registration;email=" + email + ";password=" + password + ";";
-                client.SendMessage sendMessageTask = new client.SendMessage();
-                sendMessageTask.execute();
+
+                //Тестовый вариант регистрации
+                String result = "No answer =(";
+                c.HttpAsyncTask reg = new c.HttpAsyncTask();
+                reg.execute(c.serverIP + "func=registration;email=" + email + ";password=" + password + ";");
+                try {
+                    result = reg.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                email_edit.setText(result);
                 break;
 
             default:

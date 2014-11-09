@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by Colored Lime on 24.10.2014.
  */
@@ -32,9 +34,19 @@ public class Forgot_pass extends Activity implements View.OnClickListener{
             //Например, точку с запятой.
             case R.id.forgotPass_help_button:
                 email = email_edit.getText().toString();
-                client.SendMessage.message = "func=remind;email=" + email + ";";
-                client.SendMessage sendMessageTask = new client.SendMessage();
-                sendMessageTask.execute();
+                //Тестовый вариант восстановления пароля
+                String result = "No answer =(";
+                c.HttpAsyncTask pass = new c.HttpAsyncTask();
+                pass.execute(c.serverIP + "func=remind;email=" + email + ";");
+                try {
+                    result = pass.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                email_edit.setText(result);
+
                 break;
             default:
                 break;

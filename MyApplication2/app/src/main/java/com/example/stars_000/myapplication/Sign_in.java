@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by Colored Lime on 23.10.2014.
  */
@@ -41,9 +43,25 @@ public class Sign_in extends Activity implements View.OnClickListener {
             case R.id.signin_button:
                 login = loginEdit.getText().toString();
                 password = passwordEdit.getText().toString();
-                client.SendMessage.message = "func=entrace;email=" + login + ";password=" + password + ";";
-                client.SendMessage sendMessageTask = new client.SendMessage();
-                sendMessageTask.execute();
+                //Тестовый вариант входа
+                String result = "No answer =(";
+                c.HttpAsyncTask sign_in = new c.HttpAsyncTask();
+                sign_in.execute(c.serverIP + "func=entrace;email=" + login + ";password=" + password + ";");
+                try {
+                    result = sign_in.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                if (result.equals("func=entace;result=0;")) {
+                    loginEdit.setText("Error");
+                }
+
+                if (result.equals("func=entace;result=1;")) {
+                    loginEdit.setText("Enter");
+                }
+
                 break;
             case R.id.register:
                 Intent intent = new Intent(this, Registration.class);

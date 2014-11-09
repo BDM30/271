@@ -41,7 +41,7 @@ import java.util.List;
 public class c {
 
     //TextView result;
-    public static String serverIP = "http://192.168.10.105:11000/func="; //217.197.4.107
+    public static String serverIP = "http://192.168.10.105:11000/"; //217.197.4.107
     public static String result;
     public static String resultInput = "fstinit";
     //new HttpAsyncTask().execute(query); - вызов

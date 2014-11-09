@@ -52,10 +52,18 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
         send.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                client.SendMessage.message = (myText.getText().toString()); //забиваем текст в переменную из SendMessage
+                String sndtest = "";
+                c.HttpAsyncTask sendtest = new c.HttpAsyncTask();
+                sendtest.execute(c.serverIP + myText.getText().toString());
+                try {
+                    sndtest = sendtest.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 myText.setText(""); //Очищаем наше поле ввода
-                client.SendMessage sendMessageTask = new client.SendMessage();
-                sendMessageTask.execute();
+                myTextView.setText(sndtest);
             }
         });
 
@@ -78,7 +86,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
             case R.id.http_btn:
                 //Пример http-запроса
                 c.HttpAsyncTask test = new c.HttpAsyncTask();
-                test.execute(c.serverIP + "registration;email=starson450@yandex.ru;password=vlad;");
+                test.execute(c.serverIP + "func=registration;email=starson450@yandex.ru;password=vlad;");
                 try {
                     lol = test.get();
                 } catch (InterruptedException e) {
