@@ -137,7 +137,7 @@ namespace myServer
                     switch (arrayBlocks[0])
                     {
                         case "test1" :
-                            answer = "devtest2;";
+                            answer = "devtest1;";
                             break;
                         case "test2" :
                             answer = "devtest2;";
