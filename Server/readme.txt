@@ -1,4 +1,8 @@
-Сервер поддерживает регистрацию, вход, и восстановление.
+﻿Сервер поддерживаем регистрацию, вход, и восстановление.
+Работает как с локалки, так и с внешней сети.
+К нему прикреплена отправлялка запросов на с#. (она ток для теста)
+Синнтаксис запросов не изменился.
+
 API:
 --Вход
 Q: func=entrance;email=example@vlad.ru;password=1488;
@@ -9,7 +13,7 @@ A: func=entrance;result=0; -- такой связки логин-пароль н
 Q: func=registration;email=example@vlad.ru;password=1488;
 A: func=registration;result=0; -- email уже зарегистрирован
 A: func=registration;result=1; -- успешная регистрация
-A: func=registration;result=2; -- некорректный email
+A: func=registration;result=1; -- некорректный email
 
 --Забыть пароль
 Q: func=remind;email=example@vlad.ru;
