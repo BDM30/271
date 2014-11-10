@@ -91,12 +91,24 @@ namespace myServer
                             User found = userBase.existUser(arrayNameValueEmail[1]);
                             if (found == null)
                             {
-                                userBase.addUser(arrayNameValueEmail[1], arrayNameValuePassword[1]);
-                                userBase.saveFile();
-                                answer += "result=1;";
+                                // проверка на валидность емаила
+                                if (EmailValidator.IsValidEmail(arrayNameValueEmail[1]))
+                                {
+                                    userBase.addUser(arrayNameValueEmail[1], arrayNameValuePassword[1]);
+                                    userBase.saveFile();
+                                    answer += "result=1;";
+                                }
+                                else
+                                {
+                                    answer += "result=2;";
+                                }
                             }
                             else
+                            { 
+                                // ответ в случае если, такой же есть
                                 answer += "result=0;";
+                            }
+                                
                             break;
                         case "entrace":
                             Console.WriteLine("entrace!");
