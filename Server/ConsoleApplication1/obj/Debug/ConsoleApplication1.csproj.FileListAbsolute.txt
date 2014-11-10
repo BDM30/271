@@ -10,3 +10,9 @@ C:\Users\stars_000\Desktop\GO\ConsoleApplication1\obj\Debug\ConsoleApplication1.
 C:\Users\stars_000\Desktop\GO\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
 C:\Users\stars_000\Desktop\GO\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
 C:\Users\stars_000\Desktop\GO\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\stars_000\Desktop\Server\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache

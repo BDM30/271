@@ -52,7 +52,7 @@ namespace ConsoleApplication1
             //string Answer = POST("http://localhost:8080/", "hello");
             //Console.WriteLine(Answer);
             //Answer = Mamatov Andrey
-            string answer = GET("http://localhost:11000/", "func=remind;email=starson4503@yandex.ru;");
+            string answer = GET("http://localhost:11000/", "test1;");
             Console.WriteLine(answer);
         }
     }

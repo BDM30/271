@@ -1,3 +1,0 @@
-id=0;email=starson4503@yandex.ru;password=vlad;
-id=1;email=starson450@yandex.ru;password=vlad;
-id=2;email=Colored.lime@gmail.com;password=1;

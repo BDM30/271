@@ -106,6 +106,9 @@ namespace myServer
                             else
                                 answer += "result=0;";
                             break;
+                        default:
+                            answer = "wrong query";
+                            break;
 
                     }
                     break;
@@ -123,17 +126,34 @@ namespace myServer
                             else
                                 answer += "result=0;";
                             break;
+                        default:
+                            answer = "wrong query";
+                            break;
                     }
                     break;
+// Только для нужд Егор. Потом нахер удалить
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+                case 1:
+                    switch (arrayBlocks[0])
+                    {
+                        case "test1" :
+                            answer = "devtest2;";
+                            break;
+                        case "test2" :
+                            answer = "devtest2;";
+                            break;
+                        default :
+                            answer = "wrong query";
+                            break;
+                    }
+                    Console.WriteLine("test query:={0}", arrayBlocks[0]);
+                    break;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 default:
                     answer = "wrong query";
                     break;
 
             }
-            //
-
-
-            // сюда встатить код обработки get запросов
             p.writeSuccess();
             p.outputStream.WriteLine(answer);
         }
