@@ -36,8 +36,8 @@ public class Forgot_pass extends Activity implements View.OnClickListener{
                 email = email_edit.getText().toString();
                 //Тестовый вариант восстановления пароля
                 String result = "No answer =(";
-                c.HttpAsyncTask pass = new c.HttpAsyncTask();
-                pass.execute(c.serverIP + "func=remind;email=" + email + ";");
+                Request.HttpAsyncTask pass = new Request.HttpAsyncTask();
+                pass.execute(com.example.stars_000.myapplication.Request.serverIP + "func=remind;email=" + email + ";");
                 try {
                     result = pass.get();
                 } catch (InterruptedException e) {

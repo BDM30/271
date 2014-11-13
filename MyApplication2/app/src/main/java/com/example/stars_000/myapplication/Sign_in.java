@@ -45,8 +45,8 @@ public class Sign_in extends Activity implements View.OnClickListener {
                 password = passwordEdit.getText().toString();
                 //Тестовый вариант входа
                 String result = "No answer =(";
-                c.HttpAsyncTask sign_in = new c.HttpAsyncTask();
-                sign_in.execute(c.serverIP + "func=entrace;email=" + login + ";password=" + password + ";");
+                Request.HttpAsyncTask sign_in = new Request.HttpAsyncTask();
+                sign_in.execute(com.example.stars_000.myapplication.Request.serverIP + "func=entrace;email=" + login + ";password=" + password + ";");
                 try {
                     result = sign_in.get();
                 } catch (InterruptedException e) {

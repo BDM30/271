@@ -40,8 +40,8 @@ public class Registration extends Activity implements View.OnClickListener{
 
                 //Тестовый вариант регистрации
                 String result = "No answer =(";
-                c.HttpAsyncTask reg = new c.HttpAsyncTask();
-                reg.execute(c.serverIP + "func=registration;email=" + email + ";password=" + password + ";");
+                Request.HttpAsyncTask reg = new Request.HttpAsyncTask();
+                reg.execute(com.example.stars_000.myapplication.Request.serverIP + "func=registration;email=" + email + ";password=" + password + ";");
                 try {
                     result = reg.get();
                 } catch (InterruptedException e) {

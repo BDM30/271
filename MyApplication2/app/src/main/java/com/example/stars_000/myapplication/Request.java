@@ -38,7 +38,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class c {
+public class Request {
 
     //TextView result;
     public static String serverIP = "http://192.168.10.105:11000/"; //217.197.4.107
@@ -54,7 +54,7 @@ public class c {
             // create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
 
-            // make GET request to the given URL
+            // make GET Request to the given URL
             HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
 
             // receive response as inputStream
