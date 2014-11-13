@@ -21,3 +21,9 @@ C:\Users\stars_000\Desktop\Server\SimpleHttpServer\bin\Debug\SimpleHttpServer.ex
 C:\Users\stars_000\Desktop\Server\SimpleHttpServer\bin\Debug\SimpleHttpServer.pdb
 C:\Users\stars_000\Desktop\Server\SimpleHttpServer\bin\Debug\SimpleHttpServer.exe.config
 C:\Users\stars_000\Desktop\Server\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.csprojResolveAssemblyReference.cache
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\bin\Debug\SimpleHttpServer.exe.config
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.exe
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.pdb
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.csprojResolveAssemblyReference.cache
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\bin\Debug\SimpleHttpServer.exe
+C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\bin\Debug\SimpleHttpServer.pdb

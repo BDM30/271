@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+// EmailValidator - класс для проверки корректности email
+// bool valid - атрибут хранящий статус проверки
+// IsValidEmail(string strIn) - главный метод который будет проверять валидность
+// DomainMapper(Match match) - метод преобразует UTF url в ASKII код
+
 namespace myServer
 {
     class EmailValidator

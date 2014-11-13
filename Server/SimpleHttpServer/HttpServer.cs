@@ -7,11 +7,20 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 
+// HttpServer - основной класс для работы с клиентами
+// int port - порт, с которым мы работаем
+// TcpListener listener - средвтво поиска клиентов
+// ConsoleManager consoleManager -  используем класс для работы с консолью
+// HttpServer(int port) - конструктор ициализирует порт и consoleManager
+// void listen() - слушаем клинтов и оправляем их в класс HttpProcessor
+// handleGETRequest(HttpProcessor p) - обработка GET-запроса
+
+
+
 namespace myServer
 {
-    public abstract class HttpServer
+    public class HttpServer
     {
-
         protected int port;
         TcpListener listener;
         bool is_active = true;
@@ -38,17 +47,8 @@ namespace myServer
                 Thread.Sleep(1);
             }
         }
-
-        public abstract void handleGETRequest(HttpProcessor p);
-    }
-
-    public class MyHttpServer : HttpServer
-    {
-        public MyHttpServer(int port)
-            : base(port)
-        {
-        }
-        public override void handleGETRequest(HttpProcessor p)
+        
+        public  void handleGETRequest(HttpProcessor p)
         {
             Console.WriteLine("request: {0}", p.http_url);
             string query = (p.http_url).Trim(new Char[] { '/' });
