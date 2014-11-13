@@ -13,7 +13,7 @@ namespace myServer {
         public static int Main(String[] args) {
             Console.WriteLine("Welcome to Server!\n");
             Console.Title = "Welcome to Server!";
-            HttpServer httpServer = new MyHttpServer(11000);
+            HttpServer httpServer = new HttpServer(11000);
             Thread thread = new Thread(new ThreadStart(httpServer.listen));
             thread.Start();
             return 0;

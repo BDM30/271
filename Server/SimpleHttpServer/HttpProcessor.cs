@@ -5,6 +5,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+// HttpProcessor - класс для предвариательной обработки запросов 
+// HttpProcessor(TcpClient s, HttpServer srv) - берем класс HttpServer и пришедшего с него клиента
+// string streamReadLine(Stream inputStream) - читаем одну строку из предшедней информации с клиента
+// void process() - определяем метод запроса клиента (пока что только GET)
+// void parseRequest() - парсим данные запроса
+// void handleGETRequest() - вызываем соотвествующий метод HttpServer(а)
+// void writeSuccess(string content_type = "text/html") - успешная запись
+// void writeFailure() - неудачная запись
+
+
+
 namespace myServer
 {
     public class HttpProcessor

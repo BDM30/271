@@ -7,11 +7,20 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 
+// HttpServer - основной класс для работы с клиентами
+// int port - порт, с которым мы работаем
+// TcpListener listener - средвтво поиска клиентов
+// ConsoleManager consoleManager -  используем класс для работы с консолью
+// HttpServer(int port) - конструктор ициализирует порт и consoleManager
+// void listen() - слушаем клинтов и оправляем их в класс HttpProcessor
+// handleGETRequest(HttpProcessor p) - обработка GET-запроса
+
+
+
 namespace myServer
 {
-    public abstract class HttpServer
+    public class HttpServer
     {
-
         protected int port;
         TcpListener listener;
         bool is_active = true;
@@ -38,17 +47,8 @@ namespace myServer
                 Thread.Sleep(1);
             }
         }
-
-        public abstract void handleGETRequest(HttpProcessor p);
-    }
-
-    public class MyHttpServer : HttpServer
-    {
-        public MyHttpServer(int port)
-            : base(port)
-        {
-        }
-        public override void handleGETRequest(HttpProcessor p)
+        
+        public  void handleGETRequest(HttpProcessor p)
         {
             Console.WriteLine("request: {0}", p.http_url);
             string query = (p.http_url).Trim(new Char[] { '/' });
@@ -91,20 +91,35 @@ namespace myServer
                             User found = userBase.existUser(arrayNameValueEmail[1]);
                             if (found == null)
                             {
-                                userBase.addUser(arrayNameValueEmail[1], arrayNameValuePassword[1]);
-                                userBase.saveFile();
-                                answer += "result=1;";
+                                // проверка на валидность емаила
+                                if (EmailValidator.IsValidEmail(arrayNameValueEmail[1]))
+                                {
+                                    userBase.addUser(arrayNameValueEmail[1], arrayNameValuePassword[1]);
+                                    userBase.saveFile();
+                                    answer += "result=1;";
+                                }
+                                else
+                                {
+                                    answer += "result=2;";
+                                }
                             }
                             else
+                            { 
+                                // ответ в случае если, такой же есть
                                 answer += "result=0;";
+                            }
+                                
                             break;
-                        case "entrace":
-                            Console.WriteLine("entrace!");
-                            answer = "func=entace;";
+                        case "entrance":
+                            Console.WriteLine("entrance!");
+                            answer = "func=entrance;";
                             if (userBase.existUser(arrayNameValueEmail[1], arrayNameValuePassword[1]))
                                 answer += "result=1;";
                             else
                                 answer += "result=0;";
+                            break;
+                        default:
+                            answer = "wrong query";
                             break;
 
                     }
@@ -123,17 +138,34 @@ namespace myServer
                             else
                                 answer += "result=0;";
                             break;
+                        default:
+                            answer = "wrong query";
+                            break;
                     }
                     break;
+// Только для нужд Егор. Потом нахер удалить
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+                case 1:
+                    switch (arrayBlocks[0])
+                    {
+                        case "test1" :
+                            answer = "devtest1;";
+                            break;
+                        case "test2" :
+                            answer = "devtest2;";
+                            break;
+                        default :
+                            answer = "wrong query";
+                            break;
+                    }
+                    Console.WriteLine("test query:={0}", arrayBlocks[0]);
+                    break;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 default:
                     answer = "wrong query";
                     break;
 
             }
-            //
-
-
-            // сюда встатить код обработки get запросов
             p.writeSuccess();
             p.outputStream.WriteLine(answer);
         }

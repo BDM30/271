@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // АТД Пользователь
-// хранит id, email, password ,а также метод SET-GET
+// хранит id, email, password ,а также методы SET-GET
 
 namespace myServer
 {
