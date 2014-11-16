@@ -24,10 +24,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
     public String lol;
     TextView myTextView;
     Button gotosignpage;
-    ///
-    ServerSocket serverSocket;
-    String input = "";
-    ///
+    ///тест 2
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
