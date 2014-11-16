@@ -46,7 +46,7 @@ public class Sign_in extends Activity implements View.OnClickListener {
                 //Тестовый вариант входа
                 String result = "No answer =(";
                 Request.HttpAsyncTask sign_in = new Request.HttpAsyncTask();
-                sign_in.execute(com.example.stars_000.myapplication.Request.serverIP + "func=entrace;email=" + login + ";password=" + password + ";");
+                sign_in.execute(com.example.stars_000.myapplication.Request.serverIP + "func=entrance;email=" + login + ";password=" + password + ";");
                 try {
                     result = sign_in.get();
                 } catch (InterruptedException e) {
@@ -54,13 +54,17 @@ public class Sign_in extends Activity implements View.OnClickListener {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                if (result.equals("func=entace;result=0;")) {
+                loginEdit.setText(result);
+                if (result.equals("func=entrance;result=0;")) {
                     loginEdit.setText("Error");
                 }
 
-                if (result.equals("func=entace;result=1;")) {
+                if (result.equals("func=entrance;result=1;")) {
                     loginEdit.setText("Enter");
+                    Intent sing_in = new Intent(this, Notifications.class);
+                    startActivity(sing_in);
                 }
+
 
                 break;
             case R.id.register:
