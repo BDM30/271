@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.ServerSocket;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -92,9 +91,8 @@ public class MyActivity extends Activity implements View.OnClickListener {
                 myTextView.setText(lol);
                 break;
 
-        default:
+            default:
                 break;
         }
     }
-
 }
