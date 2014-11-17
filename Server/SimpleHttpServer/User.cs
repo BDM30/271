@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 // АТД Пользователь
 // хранит id, email, password ,а также методы SET-GET
+// public override bool Equals(Object obj) переопределили метод сравнения
+// public override string ToString() переопределили метод преобразование в строку, для записи в файл.
 
 namespace myServer
 {
@@ -18,6 +20,27 @@ namespace myServer
             id = idIn;
             email = emailIn;
             password = passwordIn;
+        }
+        public override bool Equals(Object obj)
+        {
+            if (obj == null || !(obj is User))
+                return false;
+            else
+                return email == ((User)obj).email && password == ((User)obj).password;
+        }
+        public override string ToString()
+        {
+            string result = "";
+            result += "id=";
+            result += id.ToString();
+            result += ";";
+            result += "email=";
+            result += email;
+            result += ";";
+            result += "password=";
+            result += password;
+            result += ";";
+            return result;
         }
         // печать всех данных в консоль
         public void showData()

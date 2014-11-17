@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
+using System.Collections;
 
 // Класс для работы с пользователями. 
-// userList - список всех пользователей в нашей базе
+// allUsers - список всех пользователей в нашей базе. Хэш таблица : ключ = email(string) значение = obect User.
 // amountUser - количество пользователей в базе
 // loadFile() - загружает базу пользователей. ВАЖНО перед запуском нужно указать корректный адрес файла
 // existUser(email, pass) - проверяет есть пользователь в базе. Возвращает bool
@@ -21,6 +22,7 @@ namespace myServer
     class UserBase
     {
         private List<User> userList = new List<User>();
+        private Hashtable allUsers = new Hashtable();
         public UserBase()
         {
             amountUsers = 0;
@@ -28,20 +30,15 @@ namespace myServer
 
         public bool remindPassword(string email)
         {
-            User found = existUser(email);
-
-            if (found == null)
+            if (!allUsers.ContainsKey(email))
                 return false;
-
+            User found = (User)allUsers[email];
             string smtpServer = "smtp.gmail.com";
             string from = "starson4587@gmail.com";
             string password = "djkoolherc";
             string mailto = email;
             string caption = "Восстановление пароля от " + email;
             string message = "Ваш пароль =" + found.getPassword();
-
-
-
             try
             {
                 MailMessage mail = new MailMessage();
@@ -98,22 +95,17 @@ namespace myServer
             file.Close();
         }
 
-        public User existUser(string log)
+        public bool existUser(string log)
         {
-            foreach (User one in userList)
-            {
-                if (one.getEmail() == log)
-                    return one;
-            }
-            return null;
+                return allUsers.ContainsKey(log) ? true : false;
         }
 
-        public bool existUser(string log, string pas)
+        public bool validAccountEntrance(string log, string pas)
         {
-            foreach (User one in userList)
+            if (allUsers.ContainsKey(log))
             {
-                if (one.getEmail() == log && one.getPassword() == pas)
-                    return true;
+                User suspect = (User)allUsers[log];
+                return (suspect.getEmail() == log && suspect.getPassword() == pas) ? true : false;
             }
             return false;
         }
@@ -121,22 +113,12 @@ namespace myServer
         // сохраняем всех пользователей в файл allAcounts.txt (перезаписываем)
         public void saveFile()
         {
-
+            ICollection valueCollection = allUsers.Values;
             List<string> lines = new List<string>();
             // добавлять в массив строк нужно
-            foreach (User one in userList)
+            foreach (User one in valueCollection)
             {
-                string result = "";
-                result += "id=";
-                result += (one.getId()).ToString();
-                result += ";";
-                result += "email=";
-                result += (one.getEmail()).ToString();
-                result += ";";
-                result += "password=";
-                result += (one.getPassword()).ToString();
-                result += ";";
-                lines.Add(result);
+                lines.Add(one.ToString());
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allAcounts.txt", slot);
@@ -148,12 +130,12 @@ namespace myServer
         public void addUser(string log, string pas)
         {
             User newguy = new User(amountUsers++, log, pas);
-            userList.Add(newguy);
+            allUsers.Add(log, newguy);
         }
         public void addUser(int id, string log, string pas)
         {
             User newguy = new User(id, log, pas);
-            userList.Add(newguy);
+            allUsers.Add(log, newguy);
         }
     }
 }

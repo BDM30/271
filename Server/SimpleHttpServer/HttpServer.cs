@@ -88,8 +88,8 @@ namespace myServer
                     {
                         case "registration":
                             answer = "func=registration;";
-                            User found = userBase.existUser(arrayNameValueEmail[1]);
-                            if (found == null)
+                            //User found = userBase.existUser(arrayNameValueEmail[1]);
+                            if ( !(userBase.existUser(arrayNameValueEmail[1]))  )
                             {
                                 // проверка на валидность емаила
                                 if (EmailValidator.IsValidEmail(arrayNameValueEmail[1]))
@@ -113,7 +113,7 @@ namespace myServer
                         case "entrance":
                             Console.WriteLine("entrance!");
                             answer = "func=entrance;";
-                            if (userBase.existUser(arrayNameValueEmail[1], arrayNameValuePassword[1]))
+                            if (userBase.validAccountEntrance(arrayNameValueEmail[1], arrayNameValuePassword[1]))
                                 answer += "result=1;";
                             else
                                 answer += "result=0;";
