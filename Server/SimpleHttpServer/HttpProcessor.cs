@@ -57,17 +57,17 @@ namespace myServer
         }
         public void process()
         {
-            Console.WriteLine("//process started");
+            //Console.WriteLine("//process started");
             // we can't use a StreamReader for input, because it buffers up extra data on us inside it's
             // "processed" view of the world, and we want the data raw after the headers
             inputStream = new BufferedStream(socket.GetStream());
-            //Console.WriteLine("//input stream:{0}",inputStream);
+            ////Console.WriteLine("//input stream:{0}",inputStream);
 
             // we probably shouldn't be using a streamwriter for all output from handlers either
             outputStream = new StreamWriter(new BufferedStream(socket.GetStream()));
             try
             {
-                Console.WriteLine("//parse request");
+                //Console.WriteLine("//parse request");
                 parseRequest(); // Считали тип запроса, url, версию протокола
                 readHeaders(); // считали все параметры в хэш таблицу
                 if (http_method.Equals("GET"))
@@ -77,7 +77,7 @@ namespace myServer
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception: " + e.ToString());
+                //Console.WriteLine("Exception: " + e.ToString());
                 writeFailure();
             }
             outputStream.Flush();
@@ -99,23 +99,23 @@ namespace myServer
             http_url = tokens[1];
             http_protocol_versionstring = tokens[2];
 
-            Console.WriteLine("got query!");
-            Console.WriteLine("http_method :{0}", http_method);
-            Console.WriteLine("http_url :{0}", http_url);
-            Console.WriteLine("http_protocol_version :{0}", http_protocol_versionstring);
+            //Console.WriteLine("got query!");
+            //Console.WriteLine("http_method :{0}", http_method);
+            //Console.WriteLine("http_url :{0}", http_url);
+            //Console.WriteLine("http_protocol_version :{0}", http_protocol_versionstring);
             // И вывели все это!
         }
 
         public void readHeaders()
         {
             // здесь мы выводим параментры запроса
-            Console.WriteLine("readHeaders()");
+            //Console.WriteLine("readHeaders()");
             String line;
             while ((line = streamReadLine(inputStream)) != null) // кушаем все оставшиеся строки запроса
             {
                 if (line.Equals("")) // нет больше строк
                 {
-                    Console.WriteLine("got headers");
+                    //Console.WriteLine("got headers");
                     return;
                 }
 
@@ -132,7 +132,7 @@ namespace myServer
                 }
 
                 string value = line.Substring(pos, line.Length - pos);
-                Console.WriteLine("header: {0}:{1}", name, value);
+                //Console.WriteLine("header: {0}:{1}", name, value);
                 httpHeaders[name] = value;
             }
         }

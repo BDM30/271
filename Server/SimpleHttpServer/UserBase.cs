@@ -23,6 +23,7 @@ namespace myServer
     {
         private List<User> userList = new List<User>();
         private Hashtable allUsers = new Hashtable();
+        //private Hashtable allNotification = new Hashtable();
         public UserBase()
         {
             amountUsers = 0;
@@ -94,7 +95,6 @@ namespace myServer
             }
             file.Close();
         }
-
         public bool existUser(string log)
         {
                 return allUsers.ContainsKey(log) ? true : false;
