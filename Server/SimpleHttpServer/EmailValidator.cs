@@ -20,7 +20,6 @@ namespace myServer
 
         public static bool IsValidEmail(string strIn)
         {
-            Console.Write("strIn={0}\n", strIn);
             // проверка на пустоту
             if (String.IsNullOrEmpty(strIn))
                 return false;
@@ -37,7 +36,6 @@ namespace myServer
             {
                 return false;
             }
-            Console.Write("strIn={0}\n", strIn);
 
             if (invalid)
                 return false;

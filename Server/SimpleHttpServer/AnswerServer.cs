@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Net;
+using System.Net.Mail;
 
 // класс для получения ответа от сервера
 // public string getAnswer (string query) - возвращает ответ и выполняет необходимые действия
@@ -12,14 +15,73 @@ namespace myServer
 {
     class AnswerServer
     {
-        private UserBase userBase;
-        private NoteBase noteBase;
+        private Hashtable allNotes;
+        private Hashtable allUsers;
 
-        public AnswerServer()
+        public AnswerServer(Hashtable one, Hashtable two)
         {
-            userBase = new UserBase();
-            noteBase = new NoteBase();
-            userBase.loadFile();
+            allNotes = one;
+            allUsers = two;
+        }
+
+        public bool validAccountEntrance(string log, string pas)
+        {
+            if (allUsers.ContainsKey(log))
+            {
+                User suspect = (User)allUsers[log];
+                return (suspect.getEmail() == log && suspect.getPassword() == pas) ? true : false;
+            }
+            return false;
+        }
+
+        public bool remindPassword(string email)
+        {
+            if (!allUsers.ContainsKey(email))
+                return false;
+            User found = (User)allUsers[email];
+            string smtpServer = "smtp.gmail.com";
+            string from = "starson4587@gmail.com";
+            string password = "djkoolherc";
+            string mailto = email;
+            string caption = "Восстановление пароля от " + email;
+            string message = "Ваш пароль =" + found.getPassword();
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(from);
+                mail.To.Add(new MailAddress(mailto));
+                mail.Subject = caption;
+                mail.Body = message;
+                SmtpClient client = new SmtpClient();
+                client.Host = smtpServer;
+                client.Port = 587;
+                client.EnableSsl = true;
+                client.Credentials = new NetworkCredential(from.Split('@')[0], password);
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Send(mail);
+                mail.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Mail.Send: " + e.Message);
+            }
+        }
+
+        public void saveInFile()
+        {
+            Console.WriteLine("AsnwerServer.saveInFile()");
+
+            Console.WriteLine(allUsers.Count);
+            ICollection valueCollection = allUsers.Values;
+            List<string> lines = new List<string>();
+            // добавлять в массив строк нужно
+            foreach (User one in valueCollection)
+            {
+                lines.Add(one.ToString());
+            }
+            string[] slot = lines.ToArray();
+            System.IO.File.WriteAllLines(@"allAcounts.txt", slot);
         }
 
         public string getAnswer (string query) {
@@ -48,8 +110,8 @@ namespace myServer
                     string in_x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     string in_y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
 
-                    noteBase.addNote(in_user, in_name, Convert.ToDouble(in_x), Convert.ToDouble(in_y));
-                    answer = "good add note";
+                    Notification newOne = new Notification(in_name, in_user, Convert.ToDouble(in_x), Convert.ToDouble(in_y), 42);
+                    allNotes.Add(in_name, newOne);
                     break;
                 case "registration":
                     Console.WriteLine("registration!");
@@ -57,13 +119,14 @@ namespace myServer
                     string pas_r = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     answer = "func=registration;";
 
-                    if (!(userBase.existUser(log_r)))
+                    if ( !allUsers.ContainsKey(log_r) )
                     {
                         // проверка на валидность емаила
                         if (EmailValidator.IsValidEmail(log_r))
                         {
-                            userBase.addUser(log_r, pas_r);
-                            userBase.saveFile();
+                            User newGuy = new User(allUsers.Count, log_r, pas_r);
+                            allUsers.Add(log_r, newGuy);
+                            saveInFile();
                             answer += "result=1;";
                         }
                         else
@@ -77,32 +140,31 @@ namespace myServer
                         answer += "result=0;";
                     }
                     break;
+
                 case "entrance":
                     Console.WriteLine("entrance!");
                     string log_e = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     string pas_e = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     answer = "func=entrance;";
-                    if (userBase.validAccountEntrance(log_e, pas_e))
+                    if (validAccountEntrance(log_e, pas_e))
                                 answer += "result=1;";
                             else
                                 answer += "result=0;";
                     break;
+
                 case "remind":
                     Console.WriteLine("remind!");
                     string log_re = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     answer = "func=remind;";
-                    if (userBase.remindPassword(log_re))
+                    if (remindPassword(log_re))
                         answer += "result=1;";
                     else
                         answer += "result=0;";
                     break;
                 case "get_notification":
                     Console.WriteLine("get_notification!");
-                    noteBase.printNotes();
-                    break;
                     string log_g = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                    //noteBase.printNotes();
-                    answer = noteBase.getNotes(log_g);
+                    Notification slot = (Notification)allNotes[log_g];
                     break;
             }
 
@@ -145,7 +207,6 @@ namespace myServer
 
                 // вход и регистрация
                 case 3:
-                    Console.WriteLine("here");
                     // параметры
                     string func_3 = arrayBlocks[0].Split(charSeparatorsNameValue, StringSplitOptions.None)[0];
                     string email = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[0];

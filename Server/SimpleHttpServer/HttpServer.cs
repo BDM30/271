@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using System.Collections;
 
 // HttpServer - основной класс для работы с клиентами
 // int port - порт, с которым мы работаем
@@ -26,10 +27,54 @@ namespace myServer
         bool is_active = true;
         ConsoleManager consoleManager;
 
+        Hashtable allUsers;
+        // тут будем хранить кол-во пользователей и уведомлений
+        // для выставления id
+        private int amountUsers;
+        private int amountNotes;
+
+
         public HttpServer(int port)
         {
             this.port = port;
             consoleManager = new ConsoleManager();
+            amountNotes = 0;
+            amountUsers = 0;
+            allUsers = new Hashtable();
+        }
+
+        public void readUsers() {
+            allUsers = new Hashtable();
+
+            string line;
+            System.IO.StreamReader file =
+                new System.IO.StreamReader(@"allAcounts.txt");
+
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Length > 0)
+                {
+                    // line - строка где 1 учетная запись
+
+                    // убрали лишнюю точку с запятой
+                    line = line.Substring(0, line.Length - 1);
+
+                    // завели разделители
+                    char[] charSeparatorsBlocks = new char[] { ';' };
+                    char[] charSeparatorsNameValue = new char[] { '=' };
+                    // получили массив блоков
+                    string[] arrayBlocks = line.Split(charSeparatorsBlocks, StringSplitOptions.None);
+
+
+                    string[] arrayNameValueId = arrayBlocks[0].Split(charSeparatorsNameValue, StringSplitOptions.None);
+                    string[] arrayNameValueEmail = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None);
+                    string[] arrayNameValuePassword = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None);
+
+                    User newGuy = new User(amountUsers++, arrayNameValueEmail[1], arrayNameValuePassword[1]);
+                    allUsers.Add(arrayNameValueEmail[1], newGuy);
+                }
+            }
+            file.Close();
         }
 
         public void listen()
@@ -51,10 +96,22 @@ namespace myServer
         public  void handleGETRequest(HttpProcessor p)
         {
             //Console.WriteLine("request: {0}", p.http_url);
+
             string query = (p.http_url).Trim(new Char[] { '/' });
             Console.WriteLine("q = {0}", query);
-            AnswerServer ans = new AnswerServer();
-            Console.WriteLine("correct query={0}", ans.isValidQuery(query));
+
+
+            // здесь должно быть чтение и файлов БД
+            // и добавление с соотвестсующую HT
+            readUsers();
+
+            Hashtable allNotification = new Hashtable();
+
+            // Парсер же должен переписывать файлы после любого изменения данных
+            // PS после этого нужно немедленно удалить классы NoteBase и UserBase
+            // С запиями нужно попробовать концепцую HT: key=email value=note_list
+            AnswerServer ans = new AnswerServer(allNotification, allUsers);
+
             p.writeSuccess();
             p.outputStream.WriteLine(ans.getAnswer(query));
         }

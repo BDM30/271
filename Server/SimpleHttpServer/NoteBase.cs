@@ -12,7 +12,7 @@ namespace myServer
     class NoteBase
     {
         private int amountNotifications;
-        private Hashtable allNotification = new Hashtable();
+        public Hashtable allNotification = new Hashtable();
         public NoteBase() {
             amountNotifications = 0;
         }
