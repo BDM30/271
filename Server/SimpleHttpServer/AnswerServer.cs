@@ -68,20 +68,51 @@ namespace myServer
             }
         }
 
-        public void saveInFile()
+        public void saveInFileUsers()
         {
-            Console.WriteLine("AsnwerServer.saveInFile()");
-
-            Console.WriteLine(allUsers.Count);
+            Console.WriteLine("AsnwerServer.saveInFileUsers()");
             ICollection valueCollection = allUsers.Values;
             List<string> lines = new List<string>();
             // добавлять в массив строк нужно
             foreach (User one in valueCollection)
             {
                 lines.Add(one.ToString());
+                // создать файл с именем id пользователя
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allAcounts.txt", slot);
+            //System.IO.File.Create("notifications/"+".txt");
+        }
+
+        public void saveInFileNotes()
+        {
+            Console.WriteLine("AsnwerServer.saveInFileNotes()");
+            List<string> lines = new List<string>();
+            foreach (List<Notification> list_notes in allNotes.Values)
+            {     
+                foreach (Notification note in list_notes)
+                {
+                    lines.Add(note.ToString());
+                }
+               
+              
+            }
+            string[] slot = lines.ToArray();
+            System.IO.File.WriteAllLines(@"allNotes.txt", slot);
+           
+        }
+
+        private int getAmountNotes()
+        {
+            int res = 0;
+            foreach(List<Notification> list_notes in allNotes.Values)
+            {
+                foreach (Notification x in list_notes)
+                {
+                    res++;
+                }
+            }
+            return res;
         }
 
         public string getAnswer (string query) {
@@ -110,8 +141,37 @@ namespace myServer
                     string in_x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     string in_y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
 
-                    Notification newOne = new Notification(in_name, in_user, Convert.ToDouble(in_x), Convert.ToDouble(in_y), 42);
-                    allNotes.Add(in_name, newOne);
+                    answer = "func=add_notification;";
+                    if (allUsers.ContainsKey(in_user))
+                    {
+                        Notification newOne = new Notification(in_name, in_user, Convert.ToDouble(in_x), Convert.ToDouble(in_y), getAmountNotes());
+                        List<Notification> noteList;
+                        if (allNotes.ContainsKey(in_user))
+                        {
+                            noteList = (List<Notification>)allNotes[in_user];
+                            allNotes.Remove(in_user);
+                        }
+                        else
+                        {
+                            noteList = new List<Notification>();
+                        }
+                        noteList.Add(newOne);
+                        allNotes.Add(in_user, noteList);
+
+                        /*
+                        Console.WriteLine("debug");
+                        List<Notification> ln = (List<Notification>)allNotes[in_user];
+                        Console.WriteLine(ln[0].ToString());
+                        */
+
+
+                        saveInFileNotes();
+                        answer += "result=1";
+                    }
+                    else
+                    {
+                        answer += "result=0";
+                    }
                     break;
                 case "registration":
                     Console.WriteLine("registration!");
@@ -126,7 +186,7 @@ namespace myServer
                         {
                             User newGuy = new User(allUsers.Count, log_r, pas_r);
                             allUsers.Add(log_r, newGuy);
-                            saveInFile();
+                            saveInFileUsers();
                             answer += "result=1;";
                         }
                         else

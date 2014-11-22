@@ -20,3 +20,8 @@ Q: func=remind;email=example@vlad.ru;
 A: func=remind;result=0; -- пользователя с таким email не найдено
 A: func=remind;result=1; -- мы успешно выслали вам ваш вароль
 
+--Добавить напоминание
+Q: func=add_notification;name=test1;user=starson4586@gmail.com;x=3;y=4;
+A: func=add_notification;result=1; -- такой пользователь, есть и мы успешно добавили
+A: func=add_notification;result=0; -- пользователь с таким email не найден
+

@@ -28,6 +28,7 @@ namespace myServer
         ConsoleManager consoleManager;
 
         Hashtable allUsers;
+        Hashtable allNotes;
         // тут будем хранить кол-во пользователей и уведомлений
         // для выставления id
         private int amountUsers;
@@ -41,10 +42,12 @@ namespace myServer
             amountNotes = 0;
             amountUsers = 0;
             allUsers = new Hashtable();
+            allNotes = new Hashtable();
         }
 
         public void readUsers() {
             allUsers = new Hashtable();
+            amountUsers = 0;
 
             string line;
             System.IO.StreamReader file =
@@ -92,6 +95,67 @@ namespace myServer
                 Thread.Sleep(1);
             }
         }
+
+        private void readNotes()
+        {
+                string line;
+                System.IO.StreamReader file = new System.IO.StreamReader(@"allNotes.txt");
+                while ((line = file.ReadLine()) != null)
+                {
+                    
+                    
+                    if (line.Length > 0)
+                    {
+                        //Console.WriteLine("line = " + line);
+                        
+                        // убрали лишнюю точку с запятой
+                        line = line.Substring(0, line.Length - 1);
+                        // завели разделители
+                        char[] charSeparatorsBlocks = new char[] { ';' };
+                        char[] charSeparatorsNameValue = new char[] { '=' };
+                        // получили массив блоков
+                        string[] arrayBlocks = line.Split(charSeparatorsBlocks, StringSplitOptions.None);
+
+                        string id = arrayBlocks[0].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
+                        string name = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
+                        string owner = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
+                        string x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
+                        string y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
+
+                        Notification new_note = new Notification(name, owner, Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToInt32(id));
+                        //Console.WriteLine(new_note.ToString());
+                        
+
+                        // если есть какие-то данные в HT
+                        if (allNotes.ContainsKey(owner))
+                        {
+                            //Console.WriteLine("already exists");
+                            
+                            List<Notification> list_notes = (List<Notification>)allNotes[owner];
+                            
+                            list_notes.Add(new_note);
+                            allNotes.Remove(owner);
+                            allNotes.Add(owner, list_notes);
+                            
+
+                        }
+                        // если нету
+                        else
+                        {
+                            //Console.WriteLine("not exist");
+                            
+                            List<Notification> list_notes = new List<Notification>();
+                            list_notes.Add(new_note);
+                            allNotes.Add(owner, list_notes);
+                            
+                        }
+
+                    
+                    }
+                     
+                }
+
+        }
         
         public  void handleGETRequest(HttpProcessor p)
         {
@@ -103,14 +167,14 @@ namespace myServer
 
             // здесь должно быть чтение и файлов БД
             // и добавление с соотвестсующую HT
+            
             readUsers();
-
-            Hashtable allNotification = new Hashtable();
+            //readNotes();
 
             // Парсер же должен переписывать файлы после любого изменения данных
             // PS после этого нужно немедленно удалить классы NoteBase и UserBase
             // С запиями нужно попробовать концепцую HT: key=email value=note_list
-            AnswerServer ans = new AnswerServer(allNotification, allUsers);
+            AnswerServer ans = new AnswerServer(allNotes, allUsers);
 
             p.writeSuccess();
             p.outputStream.WriteLine(ans.getAnswer(query));

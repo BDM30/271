@@ -1,3 +1,0 @@
-id=0;email=starson4587@gmail.com;password=koolherc;
-id=1;email=starson4586@gmail.com;password=koolherc;
-id=2;email=starson4585@gmail.com;password=koolherc;

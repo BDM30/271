@@ -15,7 +15,6 @@ namespace myServer
             y = y_;
             name = name_;
             owner = owner_;
-            Console.WriteLine("const success");
         }
 
         public override bool Equals(Object obj)
