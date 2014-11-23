@@ -5,6 +5,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+/*
+ MyMain:
+ * класс для запуска программы
+ */ 
+
 namespace myServer {
 
     // запускаем главный класс HttpServer. Слушает клиентов и оправляет их обрабочику = HttpProcessor. Обрабочик принимает

@@ -8,13 +8,42 @@ using System.IO;
 using System.Threading;
 using System.Collections;
 
-// HttpServer - основной класс для работы с клиентами
-// int port - порт, с которым мы работаем
-// TcpListener listener - средвтво поиска клиентов
-// ConsoleManager consoleManager -  используем класс для работы с консолью
-// HttpServer(int port) - конструктор ициализирует порт и consoleManager
-// void listen() - слушаем клинтов и оправляем их в класс HttpProcessor
-// handleGETRequest(HttpProcessor p) - обработка GET-запроса
+
+/*
+    HttpServer:
+ * основной класс для работы с клиентами
+
+    Используется:
+ * MyMain
+ * HttpProcessor
+ 
+    Использует: 
+ * AnswerServer
+ * ConsoleManager
+ * User
+ * Notification
+
+
+    Атрибуты:
+ * private int port - порт, с которым мы работаем
+ * private TcpListener listener - средство поиска клиентов
+ * private HashTable allUsers - хранит всех пользователей. Key = User's email | Value = User
+ * private HashTable allNotes - хранит все напоминалки. Key = Owner's(User's) email | Value = List<Notification>
+ * private int amountNotes - счетчик имеющихся напоминалок
+ * private int amountUsers - счетчик имеющихся пользователей
+ * private ConsoleManager consoleManager -  используем класс для работы с консолью
+ * private AnswerServer answerFromServer - используем класс для получения ответа
+
+
+    Методы:
+ * public HttpServer(int port) - конструктор ициализирует порт и consoleManager
+ * public void listen() - слушаем клинтов и оправляем их в класс HttpProcessor
+ * public handleGETRequest(HttpProcessor p) - первчиная бработка GET-запроса, чтобы получить текст запроса . Эти первые методы необходимо переделать.
+
+ * private getAmountNotes() - получаем кол-во напоминалок в allNotes
+ * private readNotes() - считывает напоминалки из AllNotes.txt . И добавляет их в allNotes. Обнуляет allNotes и amountNotes.
+ * private readUsers() - считывает пользователей из AllUsers.txt . И добавляет их в allUsers. Обнуляет allUsers и amountUsers.
+ */
 
 
 
@@ -22,17 +51,18 @@ namespace myServer
 {
     public class HttpServer
     {
-        protected int port;
-        TcpListener listener;
-        bool is_active = true;
-        ConsoleManager consoleManager;
-
-        Hashtable allUsers;
-        Hashtable allNotes;
-        // тут будем хранить кол-во пользователей и уведомлений
-        // для выставления id
+        private int port;
+        private TcpListener listener;
+        private Hashtable allUsers;
+        private Hashtable allNotes;
         private int amountUsers;
         private int amountNotes;
+
+        private AnswerServer answerFromServer;
+        private ConsoleManager consoleManager;
+
+        // убрать потом.
+        private bool is_active = true;
 
 
         public HttpServer(int port)
@@ -45,7 +75,7 @@ namespace myServer
             allNotes = new Hashtable();
         }
 
-        public void readUsers() {
+        private  void readUsers() {
             allUsers = new Hashtable();
             amountUsers = 0;
 
@@ -171,10 +201,10 @@ namespace myServer
             readUsers();
             readNotes();
 
-            AnswerServer ans = new AnswerServer(allNotes, allUsers);
+            answerFromServer = new AnswerServer(allNotes, allUsers);
 
             p.writeSuccess();
-            p.outputStream.WriteLine(ans.getAnswer(query));
+            p.outputStream.WriteLine(answerFromServer.getAnswer(query));
         }
     }
 }

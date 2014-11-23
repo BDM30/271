@@ -4,10 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+    Notification:
+ * класс представляющий абстракцию Напоминание. 
+ * позже должен быть заменен или дополнен таблицей в соответсвующей БД.
+ * должен быть аналогичен классу User
+ * в перспективе будет дополнен полем Description
+ 
+    Использует:
+ * пока ничего
+ 
+    Используется:
+ * AnswerServer
+ * HttpServer
+ 
+    Атрибуты:
+ *  public double x; - координата
+ *  public double y;
+ *  public int id;
+ *  public string name;
+ *  public string owner; - email владельца
+    
+    Методы:
+ * == - полное равенство включая id? 1 : 0
+ * public Notification(string name_, string owner_, double x_, double y_, int id_) - инициализация
+ * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
+*/
+
+
 namespace myServer
 {
     public class Notification
     {
+        public double x;
+        public double y;
+        public int id;
+        public string name;
+        public string owner;
         public Notification(string name_, string owner_, double x_, double y_, int id_)
         {
             id = id_;
@@ -46,10 +79,6 @@ namespace myServer
             result += ";";
             return result;
         }
-        public double x;
-        public double y;
-        public int id;
-        public string name;
-        public string owner;
+        
     }
 }

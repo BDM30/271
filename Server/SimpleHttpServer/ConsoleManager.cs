@@ -4,16 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// класс для управления консолью
-// setColor - меняет цвет текста консоли. Принимает на вход число от 0 до 15. ВРЕМЕННО НЕ РАБОТАЕТ!
-// playSounds - проигрывает системные звуки
-// printData - выводит текущее время на сервере
-// printInfo - выводит технические характеристики машины, на который запущен сервер
+/*
+    ConsoleManager:
+ * класс для управления консолью 
+ * нужно пересмотреть метод сменить шрифт
+ 
+    Использует:
+ * пока ничего
+ 
+    Используется:
+ * HttpServer
+  
+    Атрибуты:
+ * пока ничего
+    
+    Методы:
+ * public ConsoleManager() - не делает ничего
+ * public void playSounds() - проигрывает системные звуки
+ * public void printData() - выводит текущее время на сервере
+ * public void printInfo - выводит технические характеристики машины, на который запущен сервер()
+ * public void setColor(int) - меняет цвет текста консоли. Принимает на вход число от 0 до 15. ВРЕМЕННО НЕ РАБОТАЕТ!
+*/
 
 namespace myServer
 {
     class ConsoleManager
     {
+        public ConsoleManager()
+        {
+
+        }
         public void setColor(int number)
         {
             String[] colorNames = ConsoleColor.GetNames(typeof(ConsoleColor));

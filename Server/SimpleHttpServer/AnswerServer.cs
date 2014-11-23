@@ -7,9 +7,37 @@ using System.Collections;
 using System.Net;
 using System.Net.Mail;
 
-// класс для получения ответа от сервера
-// public string getAnswer (string query) - возвращает ответ и выполняет необходимые действия
-// public bool isValidQuery(string query) - проверка запроса на корректость
+/*
+    AnswerServer:
+ * класс для проверки запроса на корректность, а также его выполнения. Работает с API.
+ * слишком большой нужно разделить его функциональность. Варинт : вынести проверку синтаксиса запроса в EmailValidator. Сам валидатор
+ переименовать. Выполнение вынести в новый класс QueryExecuter.
+ * Описание API в отдельном txt файле проекта
+    
+    Использует:
+ * User
+ * Notification
+ * EmailValidator
+    
+    Используется:
+ * HttpServer
+    
+    Атрибуты: 
+ * private Hashtable allNotes - все напоминалки. Key = Owner's(User's) email | Value = List<Notification>
+ * private Hashtable allUsers - все пользователи. Key = User's email | Value = User
+ * private EmailValidator emailValidator
+    
+    Методы:
+ ** более подробно см. описание API
+ * public AnswerServer(Hashtable one, Hashtable two) - ициализация
+ * public bool validAccountEntrance(string log, string pas) - пользователь с такой связкой существует в allUsers? 1 : 0
+ * public bool remindPassword(string email) - отправить письмо, если есть кому.
+ * public void saveInFileUsers() - заносим содержимое allUsers в allUsers.txt
+ * public void saveInFileNotes() - заносим содержимое allNotes в allNotes.txt
+ * private int getAmountNotes() - количество Notification в allNotes
+ * public string getAnswer (string query) - главный метод. Который определяем запрос пользователя и исполняет его.
+ * public bool isValidQuery(string query) - Проверка синтаксиса запроса
+*/
 
 namespace myServer
 {
@@ -18,10 +46,13 @@ namespace myServer
         private Hashtable allNotes;
         private Hashtable allUsers;
 
+        private EmailValidator emailValidator;
+
         public AnswerServer(Hashtable one, Hashtable two)
         {
             allNotes = one;
             allUsers = two;
+            emailValidator = new EmailValidator();
         }
 
         public bool validAccountEntrance(string log, string pas)
@@ -175,7 +206,7 @@ namespace myServer
                     if ( !allUsers.ContainsKey(log_r) )
                     {
                         // проверка на валидность емаила
-                        if (EmailValidator.IsValidEmail(log_r))
+                        if (emailValidator.IsValidEmail(log_r))
                         {
                             User newGuy = new User(allUsers.Count, log_r, pas_r);
                             allUsers.Add(log_r, newGuy);

@@ -7,26 +7,43 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-// EmailValidator - класс для проверки корректности email
-// bool valid - атрибут хранящий статус проверки
-// IsValidEmail(string strIn) - главный метод который будет проверять валидность
-// DomainMapper(Match match) - метод преобразует UTF url в ASKII код
+/*
+    EmailValidator:
+ * класс для проверки email на корректность.
+ * Код взят с mdsn с небольшим дополнением. (http://msdn.microsoft.com/ru-ru/library/01escwtf(v=vs.110).aspx)
+ 
+    Использует:
+ * никого пока что
+
+    Используется:
+ * AnswerServer
+   
+    Атрибуты:
+ * private bool invalid - флажок для последовательности проверок
+    
+    Методы:
+ * public EmailValidator() - инициализация
+ * private DomainMapper(Match match) - метод преобразует UTF url в ASKII код
+ * public IsValidEmail(string strIn) - главный метод который будет проверять валидность
+*/
 
 namespace myServer
 {
     class EmailValidator
     {
-        public static bool invalid = false;
+        private bool invalid;
 
-        public static bool IsValidEmail(string strIn)
+        public EmailValidator()
+        {
+            invalid = false;
+        }
+
+        public bool IsValidEmail(string strIn)
         {
             // проверка на пустоту
             if (String.IsNullOrEmpty(strIn))
                 return false;
 
-
-            // домменое имя превели в норм форму, в случае если оно не ASCII
-            // На этом этапе отпадут те, в которых больше 1 точки
             try
             {
                 strIn = Regex.Replace(strIn, @"(@)(.+)$", DomainMapper,
@@ -39,28 +56,8 @@ namespace myServer
 
             if (invalid)
                 return false;
-
-            // Return true if strIn is in valid e-mail format.
             try
             {
-
-                //((?(")("[^"]+?"@) =
-                // Если первый символ является кавычкой, совпадение с открывающей кавычкой, после которой следует
-                // как минимум одно вхождение любого символа, отличного от кавычки, с последующей закрывающей кавычкой.
-                //Строка должна заканчиваться знаком @. 
-
-                // |(([0-9a-zA-Z] =
-                //Если первый символ не является кавычкой, имеется соответствие любой буквы с A до Z или любой цифре от 0 до 9.
-
-                //(\.(?!\.)) = 
-                // Если следующим символом является точка, имеется соответствие. Если этот символ не является точкой, 
-                // выполняется поиск вперед к следующему символу и продолжается поиск соответствия. (?!\.) является утверждением
-                // отрицательного поиска вперед нулевой ширины, предотвращающим отображение двух последовательных точек в локальной части 
-                // адреса электронной почты.
-
-                // |[-!#\$%&'\*\+/=\?\^`\{\}\|~\w] = 
-                // Если следующий символ не является точкой, совпадение с любым символом слова или одним из следующих символов: -!#$%'*+=?^`{}|~.
-
                 return Regex.IsMatch(strIn,
                       @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
                       @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+([a-z0-9][-\w]*[0-9a-z]*){2,24}))$",
@@ -70,15 +67,10 @@ namespace myServer
             {
                 return false;
             }
-
-
-
-            //return true;
         }
-        // Проверка домена, чтобы все его символы были из ASCII
-        private static string DomainMapper(Match match)
+
+        private string DomainMapper(Match match)
         {
-            // IdnMapping class with default property values.
             IdnMapping idn = new IdnMapping();
 
 
@@ -86,7 +78,6 @@ namespace myServer
             Console.WriteLine("domain={0}", domainName);
             try
             {
-                // Метод IdnMapping.GetAscii нормализует имя домена, преобразует нормализованное имя в представление
                 domainName = idn.GetAscii(domainName);
             }
             catch (ArgumentException)

@@ -5,17 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-// АТД Пользователь
-// хранит id, email, password ,а также методы SET-GET
-// public override bool Equals(Object obj) переопределили метод сравнения
-// public override string ToString() переопределили метод преобразование в строку, для записи в файл.
+/*
+    User:
+ * класс представляющий абстракцию пользователь. 
+ * позже должен быть заменен или дополнен таблицей в соответсвующей БД.
+ * должен быть аналогичен классу Notification
+    
+    Использует:
+ * пока ничего
+ 
+    Используется:
+ * AnswerServer
+ * HttpServer
+    
+    Атрибуты:
+ * private string email
+ * private string password
+ * private int id
+  
+    Методы:
+ * == - логин и пароль совпали? 1 : 0
+ * public User(int idIn, string emailIn, string passwordIn) - инициализация
+ * public int  getId()
+ * public string getEmail()
+ * public string getPassword()
+ * public void setId(int idIn)
+ * public void setEmail(string emailIn)
+ * public void setPassword(string passwordIn)
+ * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
+ * 
+ */
 
 namespace myServer
 {
     class User
     {
 
-        // коструктор
+        private int id;
+        private string email;
+        private string password;
+
         public User(int idIn, string emailIn, string passwordIn)
         {
             id = idIn;
@@ -43,12 +72,6 @@ namespace myServer
             result += ";";
             return result;
         }
-        // печать всех данных в консоль
-        public void showData()
-        {
-            Console.WriteLine("id = {0}\nemail = {1}\npassword = {2}", id, email, password);
-        }
-        // set - методы
         public void setId(int idIn)
         {
             id = idIn;
@@ -61,7 +84,6 @@ namespace myServer
         {
             password = passwordIn;
         }
-        // get - методы
         public int getId()
         {
             return id;
@@ -75,9 +97,5 @@ namespace myServer
             return password;
         }
 
-        // переменные, хранящие данные
-        private int id;
-        private string email;
-        private string password;
     }
 }
