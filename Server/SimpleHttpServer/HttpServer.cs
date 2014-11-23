@@ -21,14 +21,14 @@ using System.Collections;
  * AnswerServer
  * ConsoleManager
  * User
- * Notification
+ * Note
 
 
     Атрибуты:
  * private int port - порт, с которым мы работаем
  * private TcpListener listener - средство поиска клиентов
  * private HashTable allUsers - хранит всех пользователей. Key = User's email | Value = User
- * private HashTable allNotes - хранит все напоминалки. Key = Owner's(User's) email | Value = List<Notification>
+ * private HashTable allNotes - хранит все напоминалки. Key = Owner's(User's) email | Value = List<Note>
  * private int amountNotes - счетчик имеющихся напоминалок
  * private int amountUsers - счетчик имеющихся пользователей
  * private ConsoleManager consoleManager -  используем класс для работы с консолью
@@ -154,19 +154,19 @@ namespace myServer
                         string x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                         string y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
 
-                        Notification new_note = new Notification(name, owner, Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToInt32(id));
+                        Note new_note = new Note(name, owner, Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToInt32(id));
                         amountNotes++;
                         // если есть какие-то данные в HT
                         if (allNotes.ContainsKey(owner))
                         {
-                            List<Notification> list_notes = (List<Notification>)allNotes[owner]; 
+                            List<Note> list_notes = (List<Note>)allNotes[owner]; 
                             list_notes.Add(new_note);
                             allNotes.Remove(owner);
                             allNotes.Add(owner, list_notes);
                         }
                         else
                         {
-                            List<Notification> list_notes = new List<Notification>();
+                            List<Note> list_notes = new List<Note>();
                             list_notes.Add(new_note);
                             allNotes.Add(owner, list_notes);
                             
@@ -181,9 +181,9 @@ namespace myServer
         private int getAmountNotes()
         {
             int res = 0;
-            foreach (List<Notification> list_notes in allNotes.Values)
+            foreach (List<Note> list_notes in allNotes.Values)
             {
-                foreach (Notification x in list_notes)
+                foreach (Note x in list_notes)
                 {
                     res++;
                 }

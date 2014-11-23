@@ -16,14 +16,14 @@ using System.Net.Mail;
     
     Использует:
  * User
- * Notification
+ * Note
  * EmailValidator
     
     Используется:
  * HttpServer
     
     Атрибуты: 
- * private Hashtable allNotes - все напоминалки. Key = Owner's(User's) email | Value = List<Notification>
+ * private Hashtable allNotes - все напоминалки. Key = Owner's(User's) email | Value = List<Note>
  * private Hashtable allUsers - все пользователи. Key = User's email | Value = User
  * private EmailValidator emailValidator
     
@@ -34,7 +34,7 @@ using System.Net.Mail;
  * public bool remindPassword(string email) - отправить письмо, если есть кому.
  * public void saveInFileUsers() - заносим содержимое allUsers в allUsers.txt
  * public void saveInFileNotes() - заносим содержимое allNotes в allNotes.txt
- * private int getAmountNotes() - количество Notification в allNotes
+ * private int getAmountNotes() - количество Note в allNotes
  * public string getAnswer (string query) - главный метод. Который определяем запрос пользователя и исполняет его.
  * public bool isValidQuery(string query) - Проверка синтаксиса запроса
 */
@@ -112,16 +112,15 @@ namespace myServer
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allAcounts.txt", slot);
-            //System.IO.File.Create("notifications/"+".txt");
         }
 
         public void saveInFileNotes()
         {
             Console.WriteLine("AsnwerServer.saveInFileNotes()");
             List<string> lines = new List<string>();
-            foreach (List<Notification> list_notes in allNotes.Values)
+            foreach (List<Note> list_notes in allNotes.Values)
             {     
-                foreach (Notification note in list_notes)
+                foreach (Note note in list_notes)
                 {
                     lines.Add(note.ToString());
                 }
@@ -136,9 +135,9 @@ namespace myServer
         private int getAmountNotes()
         {
             int res = 0;
-            foreach(List<Notification> list_notes in allNotes.Values)
+            foreach(List<Note> list_notes in allNotes.Values)
             {
-                foreach (Notification x in list_notes)
+                foreach (Note x in list_notes)
                 {
                     res++;
                 }
@@ -176,16 +175,16 @@ namespace myServer
                     answer = "func=add_notification;";
                     if (allUsers.ContainsKey(in_user))
                     {
-                        Notification newOne = new Notification(in_name, in_user, Convert.ToDouble(in_x), Convert.ToDouble(in_y), getAmountNotes());
-                        List<Notification> noteList;
+                        Note newOne = new Note(in_name, in_user, Convert.ToDouble(in_x), Convert.ToDouble(in_y), getAmountNotes());
+                        List<Note> noteList;
                         if (allNotes.ContainsKey(in_user))
                         {
-                            noteList = (List<Notification>)allNotes[in_user];
+                            noteList = (List<Note>)allNotes[in_user];
                             allNotes.Remove(in_user);
                         }
                         else
                         {
-                            noteList = new List<Notification>();
+                            noteList = new List<Note>();
                         }
                         noteList.Add(newOne);
                         allNotes.Add(in_user, noteList);
@@ -252,8 +251,8 @@ namespace myServer
                     if (allNotes.ContainsKey(log_g))
                     {
                         answer += "result=1;;;";
-                        List<Notification> list_notes = (List<Notification>)allNotes[log_g];
-                        foreach (Notification one in list_notes)
+                        List<Note> list_notes = (List<Note>)allNotes[log_g];
+                        foreach (Note one in list_notes)
                         {
                             Console.WriteLine("new one");
                             answer += one.ToString()+";;";
