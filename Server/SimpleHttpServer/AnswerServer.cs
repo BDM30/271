@@ -99,7 +99,7 @@ namespace myServer
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allNotes.txt", slot);
-           
+            Console.WriteLine("saved {0} notes",getAmountNotes());
         }
 
         private int getAmountNotes()
@@ -136,6 +136,7 @@ namespace myServer
             {
                 case "add_notification":
                     Console.WriteLine("add_notification!");
+                    Console.WriteLine("amount before adding = {0}", getAmountNotes());
                     string in_name = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     string in_user = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
                     string in_x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
@@ -157,14 +158,6 @@ namespace myServer
                         }
                         noteList.Add(newOne);
                         allNotes.Add(in_user, noteList);
-
-                        /*
-                        Console.WriteLine("debug");
-                        List<Notification> ln = (List<Notification>)allNotes[in_user];
-                        Console.WriteLine(ln[0].ToString());
-                        */
-
-
                         saveInFileNotes();
                         answer += "result=1";
                     }
@@ -224,7 +217,22 @@ namespace myServer
                 case "get_notification":
                     Console.WriteLine("get_notification!");
                     string log_g = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                    Notification slot = (Notification)allNotes[log_g];
+                    answer = "func=get_notification;";
+                    if (allNotes.ContainsKey(log_g))
+                    {
+                        answer += "result=1;;;";
+                        List<Notification> list_notes = (List<Notification>)allNotes[log_g];
+                        foreach (Notification one in list_notes)
+                        {
+                            Console.WriteLine("new one");
+                            answer += one.ToString()+";;";
+                        }
+                    }
+                    else
+                    {
+                        answer += "result=0;";
+                    }
+                    
                     break;
             }
 

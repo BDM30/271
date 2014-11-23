@@ -75,6 +75,7 @@ namespace myServer
 
                     User newGuy = new User(amountUsers++, arrayNameValueEmail[1], arrayNameValuePassword[1]);
                     allUsers.Add(arrayNameValueEmail[1], newGuy);
+                    amountUsers++;
                 }
             }
             file.Close();
@@ -98,15 +99,16 @@ namespace myServer
 
         private void readNotes()
         {
+                    allNotes = new Hashtable();
+                    amountNotes = 0;
+
+                Console.WriteLine("before read {0} notes", getAmountNotes());
                 string line;
                 System.IO.StreamReader file = new System.IO.StreamReader(@"allNotes.txt");
                 while ((line = file.ReadLine()) != null)
                 {
-                    
-                    
                     if (line.Length > 0)
                     {
-                        //Console.WriteLine("line = " + line);
                         
                         // убрали лишнюю точку с запятой
                         line = line.Substring(0, line.Length - 1);
@@ -123,38 +125,40 @@ namespace myServer
                         string y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
 
                         Notification new_note = new Notification(name, owner, Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToInt32(id));
-                        //Console.WriteLine(new_note.ToString());
-                        
-
+                        amountNotes++;
                         // если есть какие-то данные в HT
                         if (allNotes.ContainsKey(owner))
                         {
-                            //Console.WriteLine("already exists");
-                            
-                            List<Notification> list_notes = (List<Notification>)allNotes[owner];
-                            
+                            List<Notification> list_notes = (List<Notification>)allNotes[owner]; 
                             list_notes.Add(new_note);
                             allNotes.Remove(owner);
                             allNotes.Add(owner, list_notes);
-                            
-
                         }
-                        // если нету
                         else
                         {
-                            //Console.WriteLine("not exist");
-                            
                             List<Notification> list_notes = new List<Notification>();
                             list_notes.Add(new_note);
                             allNotes.Add(owner, list_notes);
                             
                         }
-
-                    
-                    }
-                     
+                    }       
                 }
+                file.Close();
+                Console.WriteLine("after read {0} notes", getAmountNotes());
 
+        }
+
+        private int getAmountNotes()
+        {
+            int res = 0;
+            foreach (List<Notification> list_notes in allNotes.Values)
+            {
+                foreach (Notification x in list_notes)
+                {
+                    res++;
+                }
+            }
+            return res;
         }
         
         public  void handleGETRequest(HttpProcessor p)
@@ -163,17 +167,10 @@ namespace myServer
 
             string query = (p.http_url).Trim(new Char[] { '/' });
             Console.WriteLine("q = {0}", query);
-
-
-            // здесь должно быть чтение и файлов БД
-            // и добавление с соотвестсующую HT
-            
+     
             readUsers();
-            //readNotes();
+            readNotes();
 
-            // Парсер же должен переписывать файлы после любого изменения данных
-            // PS после этого нужно немедленно удалить классы NoteBase и UserBase
-            // С запиями нужно попробовать концепцую HT: key=email value=note_list
             AnswerServer ans = new AnswerServer(allNotes, allUsers);
 
             p.writeSuccess();
