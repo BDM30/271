@@ -81,7 +81,7 @@ namespace myServer
             string password = "djkoolherc";
             string mailto = email;
             string caption = "Восстановление пароля от " + email;
-            string message = "Ваш пароль =" + found.getPassword();
+            string message = "Ваш пароль =" + found.password;
             try
             {
                 MailMessage mail = new MailMessage();
@@ -169,7 +169,7 @@ namespace myServer
             if (allUsers.ContainsKey(log))
             {
                 User suspect = (User)allUsers[log];
-                return (suspect.getEmail() == log && suspect.getPassword() == pas) ? true : false;
+                return (suspect.email == log && suspect.password == pas) ? true : false;
             }
             return false;
         }

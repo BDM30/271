@@ -15,23 +15,17 @@ using System.Collections;
  * пока ничего
  
     Используется:
- * AnswerServer
+ * APIexecuter
  * HttpServer
     
     Атрибуты:
- * private string email
- * private string password
- * private int id
+ * public string email
+ * public string password
+ * public int id
   
     Методы:
  * == - логин и пароль совпали? 1 : 0
  * public User(int idIn, string emailIn, string passwordIn) - инициализация
- * public int  getId()
- * public string getEmail()
- * public string getPassword()
- * public void setId(int idIn)
- * public void setEmail(string emailIn)
- * public void setPassword(string passwordIn)
  * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
  * 
  */
@@ -41,9 +35,9 @@ namespace myServer
     class User
     {
 
-        private int id;
-        private string email;
-        private string password;
+        public int id;
+        public string email;
+        public string password;
 
         public User(int idIn, string emailIn, string passwordIn)
         {
@@ -72,30 +66,5 @@ namespace myServer
             result += ";";
             return result;
         }
-        public void setId(int idIn)
-        {
-            id = idIn;
-        }
-        public void setEmail(string emailIn)
-        {
-            email = emailIn;
-        }
-        public void setPassword(string passwordIn)
-        {
-            password = passwordIn;
-        }
-        public int getId()
-        {
-            return id;
-        }
-        public string getEmail()
-        {
-            return email;
-        }
-        public string getPassword()
-        {
-            return password;
-        }
-
     }
 }

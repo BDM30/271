@@ -22,7 +22,7 @@ using System.Threading.Tasks;
     Методы:
  * public ConsoleManager() - не делает ничего
  * public void playSounds() - проигрывает системные звуки
- * public void printData() - выводит текущее время на сервере
+ * public void printDate() - выводит текущее время на сервере
  * public void printInfo - выводит технические характеристики машины, на который запущен сервер()
 */
 

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
  * пока ничего
  
     Используется:
- * AnswerServer
+ * APIexecuter
  * HttpServer
  
     Атрибуты:
@@ -26,7 +26,7 @@ using System.Threading.Tasks;
  *  public string owner; - email владельца
     
     Методы:
- * == - полное равенство включая id? 1 : 0
+ * == - равенство без id? 1 : 0
  * public Note(string name_, string owner_, double x_, double y_, int id_) - инициализация
  * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
 */
