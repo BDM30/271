@@ -14,6 +14,7 @@ using System.Threading.Tasks;
  
     Используется:
  * HttpServer
+ * MyMain
   
     Атрибуты:
  * пока ничего
@@ -23,7 +24,6 @@ using System.Threading.Tasks;
  * public void playSounds() - проигрывает системные звуки
  * public void printData() - выводит текущее время на сервере
  * public void printInfo - выводит технические характеристики машины, на который запущен сервер()
- * public void setColor(int) - меняет цвет текста консоли. Принимает на вход число от 0 до 15. ВРЕМЕННО НЕ РАБОТАЕТ!
 */
 
 namespace myServer
@@ -33,11 +33,6 @@ namespace myServer
         public ConsoleManager()
         {
 
-        }
-        public void setColor(int number)
-        {
-            String[] colorNames = ConsoleColor.GetNames(typeof(ConsoleColor));
-            Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), colorNames[number]);
         }
 
         public void playSoynds()

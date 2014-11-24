@@ -8,6 +8,9 @@ using System.Threading;
 /*
  MyMain:
  * класс для запуска программы
+    Использует:
+ * ConsoleManager
+ * HttpServer
  */ 
 
 namespace myServer {
@@ -16,8 +19,12 @@ namespace myServer {
     // клиента, а также указатель на класс сервера, чтобы вызывать POST и GET методы.
     public class MyMain {
         public static int Main(String[] args) {
-            Console.WriteLine("Welcome to Server!\n");
-            Console.Title = "Welcome to Server!";
+            // некая инфа о машине
+            ConsoleManager man = new ConsoleManager();
+            man.printInfo();
+
+            Console.WriteLine("\nWelcome to Server!\n");
+            Console.Title = "Welcome to Server!"; 
             HttpServer httpServer = new HttpServer(11000);
             Thread thread = new Thread(new ThreadStart(httpServer.listen));
             thread.Start();
