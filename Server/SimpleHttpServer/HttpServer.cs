@@ -81,7 +81,7 @@ namespace myServer
 
             string line;
             System.IO.StreamReader file =
-                new System.IO.StreamReader(@"allAcounts.txt");
+                new System.IO.StreamReader(@"allUsers.txt");
 
             while ((line = file.ReadLine()) != null)
             {
