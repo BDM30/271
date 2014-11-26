@@ -27,8 +27,7 @@ A: func=add_notification;result=0; -- пользователь с таким ema
 
 --Получить все напоминания. Если успешно, то разделение напоминаний ";;;"
 Q: func=get_notification;email=starson4587@gmail.com;
-A: func=get_notification;result=1;;;id=0;name=test1;owner=starson4587@gmail.com;x=3;y=4;;; -- Получили 
-											   -- все напоминания
-											   -- строкой.
+A: func=get_notification;result=1;;;{"id":1,"name":"test1","owner":"starson4587@gmail.com","x":3,"y":4};;
+-- разделение в виде ;;
 A: func=get_notification;result=0; -- у пользователя нет напоминаний.
 

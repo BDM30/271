@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Threading;
 using System.Collections;
-
+using System.Web.Helpers;
 
 /*
     HttpServer:
@@ -87,24 +87,12 @@ namespace myServer
             {
                 if (line.Length > 0)
                 {
-                    // line - строка где 1 учетная запись
-
-                    // убрали лишнюю точку с запятой
-                    line = line.Substring(0, line.Length - 1);
-
-                    // завели разделители
-                    char[] charSeparatorsBlocks = new char[] { ';' };
-                    char[] charSeparatorsNameValue = new char[] { '=' };
-                    // получили массив блоков
-                    string[] arrayBlocks = line.Split(charSeparatorsBlocks, StringSplitOptions.None);
-
-
-                    string[] arrayNameValueId = arrayBlocks[0].Split(charSeparatorsNameValue, StringSplitOptions.None);
-                    string[] arrayNameValueEmail = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None);
-                    string[] arrayNameValuePassword = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None);
-
-                    User newGuy = new User(amountUsers++, arrayNameValueEmail[1], arrayNameValuePassword[1]);
-                    allUsers.Add(arrayNameValueEmail[1], newGuy);
+                    Console.WriteLine("line={0}", line);
+                    User new_one = Json.Decode<User>(line);
+                   
+                    Console.WriteLine("id={0}", new_one.password);
+                    new_one.id = amountUsers++; 
+                    allUsers.Add(new_one.email, new_one);
                     amountUsers++;
                 }
             }
@@ -139,36 +127,21 @@ namespace myServer
                 {
                     if (line.Length > 0)
                     {
-                        
-                        // убрали лишнюю точку с запятой
-                        line = line.Substring(0, line.Length - 1);
-                        // завели разделители
-                        char[] charSeparatorsBlocks = new char[] { ';' };
-                        char[] charSeparatorsNameValue = new char[] { '=' };
-                        // получили массив блоков
-                        string[] arrayBlocks = line.Split(charSeparatorsBlocks, StringSplitOptions.None);
-
-                        string id = arrayBlocks[0].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                        string name = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                        string owner = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                        string x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                        string y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-
-                        Note new_note = new Note(name, owner, Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToInt32(id));
-                        amountNotes++;
+                        Note new_one = Json.Decode<Note>(line);
+                        new_one.id = amountNotes++;
                         // если есть какие-то данные в HT
-                        if (allNotes.ContainsKey(owner))
+                        if (allNotes.ContainsKey(new_one.owner))
                         {
-                            List<Note> list_notes = (List<Note>)allNotes[owner]; 
-                            list_notes.Add(new_note);
-                            allNotes.Remove(owner);
-                            allNotes.Add(owner, list_notes);
+                            List<Note> list_notes = (List<Note>)allNotes[new_one.owner]; 
+                            list_notes.Add(new_one);
+                            allNotes.Remove(new_one.owner);
+                            allNotes.Add(new_one.owner, list_notes);
                         }
                         else
                         {
                             List<Note> list_notes = new List<Note>();
-                            list_notes.Add(new_note);
-                            allNotes.Add(owner, list_notes);
+                            list_notes.Add(new_one);
+                            allNotes.Add(new_one.owner, list_notes);
                             
                         }
                     }       

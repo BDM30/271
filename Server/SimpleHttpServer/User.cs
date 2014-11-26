@@ -26,8 +26,7 @@ using System.Collections;
     Методы:
  * == - логин и пароль совпали? 1 : 0
  * public User(int idIn, string emailIn, string passwordIn) - инициализация
- * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
- * 
+ * public User() - без него не читается из JSON
  */
 
 namespace myServer
@@ -38,6 +37,11 @@ namespace myServer
         public int id;
         public string email;
         public string password;
+
+        public User()
+        {
+
+        }
 
         public User(int idIn, string emailIn, string passwordIn)
         {
@@ -51,20 +55,6 @@ namespace myServer
                 return false;
             else
                 return email == ((User)obj).email && password == ((User)obj).password;
-        }
-        public override string ToString()
-        {
-            string result = "";
-            result += "id=";
-            result += id.ToString();
-            result += ";";
-            result += "email=";
-            result += email;
-            result += ";";
-            result += "password=";
-            result += password;
-            result += ";";
-            return result;
         }
     }
 }

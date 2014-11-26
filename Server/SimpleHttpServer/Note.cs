@@ -29,6 +29,7 @@ using System.Threading.Tasks;
  * == - равенство без id? 1 : 0
  * public Note(string name_, string owner_, double x_, double y_, int id_) - инициализация
  * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
+ * public Note() - без него не читается из JSON. Весьма любопытный факт
 */
 
 
@@ -36,11 +37,16 @@ namespace myServer
 {
     public class Note
     {
-        public double x;
-        public double y;
         public int id;
         public string name;
         public string owner;
+        public double x;
+        public double y;
+
+        public Note()
+        {
+
+        }
         public Note(string name_, string owner_, double x_, double y_, int id_)
         {
             id = id_;
@@ -57,28 +63,6 @@ namespace myServer
             else
                 return x == ((Note)obj).x && y == ((Note)obj).y &&
                     name == ((Note)obj).name && owner == ((Note)obj).owner;
-        }
-
-        public override string ToString()
-        {
-            string result = "";
-            result += "id=";
-            result += id.ToString();
-            result += ";";
-            result += "name=";
-            result += name;
-            result += ";";
-            result += "owner=";
-            result += owner;
-            result += ";";
-            result += "x=";
-            result += x.ToString();
-            result += ";";
-            result += "y=";
-            result += y.ToString();
-            result += ";";
-            return result;
-        }
-        
+        }       
     }
 }

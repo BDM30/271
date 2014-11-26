@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Net.Mail;
 using System.Net;
+using System.Web.Helpers;
 
 /*
     APIexecuter:
@@ -61,7 +62,7 @@ namespace myServer
                 foreach (Note one in list_notes)
                 {
                     Console.WriteLine("new one");
-                    answer += one.ToString() + ";;";
+                    answer += Json.Encode(one) + ";;";
                 }
             }
             else
@@ -182,7 +183,7 @@ namespace myServer
             {
                 foreach (Note note in list_notes)
                 {
-                    lines.Add(note.ToString());
+                    lines.Add(Json.Encode(note));
                 }
 
 
@@ -200,7 +201,7 @@ namespace myServer
             // добавлять в массив строк нужно
             foreach (User one in valueCollection)
             {
-                lines.Add(one.ToString());
+                lines.Add(Json.Encode(one));
                 // создать файл с именем id пользователя
             }
             string[] slot = lines.ToArray();
