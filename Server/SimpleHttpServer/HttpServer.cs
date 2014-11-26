@@ -87,10 +87,7 @@ namespace myServer
             {
                 if (line.Length > 0)
                 {
-                    Console.WriteLine("line={0}", line);
                     User new_one = Json.Decode<User>(line);
-                   
-                    Console.WriteLine("id={0}", new_one.password);
                     new_one.id = amountUsers++; 
                     allUsers.Add(new_one.email, new_one);
                     amountUsers++;

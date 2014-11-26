@@ -5,12 +5,12 @@
 
 API:
 --Вход
-Q: func=entrance;email=example@vlad.ru;password=1488;
+Q: {"function":"entrance","email":"starson4588@gmail.com","password":"koolherc"}
 A: func=entrance;result=1; -- такая связка логин-пароль существует
 A: func=entrance;result=0; -- такой связки логин-пароль не существует
 
 --Регистрация
-Q: func=registration;email=example@vlad.ru;password=1488;
+Q: {"function":"registration","email":"starson4588@gmail.com","password":"koolherc"}
 A: func=registration;result=0; -- email уже зарегистрирован
 A: func=registration;result=1; -- успешная регистрация
 A: func=registration;result=2; -- некорректный email
