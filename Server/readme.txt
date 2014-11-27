@@ -1,7 +1,5 @@
-﻿Сервер поддерживаем регистрацию, вход, и восстановление.
-Работает как с локалки, так и с внешней сети.
-К нему прикреплена отправлялка запросов на с#. (она ток для теста)
-Синнтаксис запросов не изменился.
+﻿Работает как с локалки, так и с внешней сети.
+API запросов только через JSON.
 
 API:
 --Вход
@@ -16,17 +14,17 @@ A: func=registration;result=1; -- успешная регистрация
 A: func=registration;result=2; -- некорректный email
 
 --Забыть пароль
-Q: func=remind;email=example@vlad.ru;
+Q: {"function":"remind","email":"starson4588@gmail.com"}
 A: func=remind;result=0; -- пользователя с таким email не найдено
 A: func=remind;result=1; -- мы успешно выслали вам ваш вароль
 
 --Добавить напоминание
-Q: func=add_notification;name=test1;user=starson4586@gmail.com;x=3;y=4;
+Q: {"function":"add_note","name":"test1","user":"starson4588@gmail.com","x":3,"y":4}
 A: func=add_notification;result=1; -- такой пользователь, есть и мы успешно добавили
 A: func=add_notification;result=0; -- пользователь с таким email не найден
 
 --Получить все напоминания. Если успешно, то разделение напоминаний ";;;"
-Q: func=get_notification;email=starson4587@gmail.com;
+Q: {"function":"get_notes","email":"starson4588@gmail.com"}
 A: func=get_notification;result=1;;;{"id":1,"name":"test1","owner":"starson4587@gmail.com","x":3,"y":4};;
 -- разделение в виде ;;
 A: func=get_notification;result=0; -- у пользователя нет напоминаний.

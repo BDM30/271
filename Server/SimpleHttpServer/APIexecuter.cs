@@ -106,12 +106,12 @@ namespace myServer
             }
         }
 
-        public string add_notification(string name, string user, string x, string y)
+        public string add_notification(string name, string user, double x, double y)
         {
             string res = "-1";
             if (allUsers.ContainsKey(user))
             {
-                Note newOne = new Note(name, user, Convert.ToDouble(x), Convert.ToDouble(y), getAmountNotes());
+                Note newOne = new Note(name, user, x, y, getAmountNotes());
                 List<Note> noteList;
                 if (allNotes.ContainsKey(user))
                 {

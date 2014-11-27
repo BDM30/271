@@ -65,16 +65,17 @@ namespace myServer
 
             switch (method)
             {
-                /*
-            case "add_notification":
+                
+            case "add_note":
                 Console.WriteLine("add_notification!");
-                string in_name = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                string in_user = arrayBlocks[2].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                string in_x = arrayBlocks[3].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                string in_y = arrayBlocks[4].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                answer = "func=add_notification;result=" + api.add_notification(in_name,in_user,in_x, in_y) + ";";
+                    
+                answer = "func=add_notification;result=" + api.add_notification(Json.Decode<AddNoteQuery>(query).name,
+                    Json.Decode<AddNoteQuery>(query).user,
+                    Json.Decode<AddNoteQuery>(query).x,
+                    Json.Decode<AddNoteQuery>(query).y) + ";";
+                     
                 break;
-            */
+            
                 case "registration":
                     Console.WriteLine("registration!");
                     answer = "func=registration;result=" + api.registration(Json.Decode<RegistrationQuery>(query).email,
@@ -86,18 +87,17 @@ namespace myServer
                     answer = "func=entrance;result=" + api.entrance(Json.Decode<EntranceQuery>(query).email,
                                                                     Json.Decode<EntranceQuery>(query).password) + ";";
                     break;
-                /*
+                
                 case "remind":
                     Console.WriteLine("remind!");
-                    string log_re = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                    answer = "func=remind;result=" + api.remind(log_re) + ";";
+                    answer = "func=remind;result=" + api.remind(Json.Decode<RemindQuery>(query).email) + ";";
                     break;
-                case "get_notification":
+                
+                case "get_notes":
                     Console.WriteLine("get_notification!");
-                    string log_g = arrayBlocks[1].Split(charSeparatorsNameValue, StringSplitOptions.None)[1];
-                    answer = "func=get_notification;" + api.get_notification(log_g);
+                    answer = "func=get_notification;" + api.get_notification(Json.Decode<GetNotesQuery>(query).email);
                     break;
-                 */
+                 
             }
 
             return answer;
