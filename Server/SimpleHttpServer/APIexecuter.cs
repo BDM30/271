@@ -27,12 +27,21 @@ using System.Web.Helpers;
     
     Методы:
  * public APIexecuter(ref Hashtable all_notes, ref Hashtable all_users) - инициализация
- * public string get_notification (string log) - вовзращает все напоминалки Пользователя из allNotes
+ * public List<Notes> get_notification (string log) - вовзращает все напоминалки Пользователя из allNotes
  * public string remind(string email) - отравляет письмо с паролем
+    1 - есть аккаунт с таким логином
+    0 - такого аккаунта нет
  * public string add_notification(string name, string user, string x, string y) - добавить напоминалку в allNotes
+    1 - есть аккаунт с таким логином
+    0 - такого аккаунта нет
  * public string entrance(string log, string pas) - поиск пары логин/пароль в allUsers
+    1 - есть аккаунт с таким логином
+    0 - такого аккаунта нет
     * private bool validAccountEntrance(string log, string pas) - логика метода entrace(log, pas)
  * public string registration(string log, string pas) - создать и добавить пользователя в allUsers 
+    1 - верный email и такого у нас еще нет
+    0 - такой email уже есть
+    2 - email введен неверно
  * private void saveInFileNotes() - сохранить allNotes в allNotes.txt , формат хранения определен классом Note
  * private void saveInFileUsers() - сохранить allUsers в allUsers.txt , формат хранения определен классом User
  * private int getAmountNotes() - получить количество Note в allNotes
@@ -53,23 +62,17 @@ namespace myServer
             validator = new Validator();
         }
 
-        public string get_notification (string log) {
-            string answer = "";
+        public List<Note> get_notification(string log)
+        {
             if (allNotes.ContainsKey(log))
             {
-                answer += "result=1;;;";
                 List<Note> list_notes = (List<Note>)allNotes[log];
-                foreach (Note one in list_notes)
-                {
-                    Console.WriteLine("new one");
-                    answer += Json.Encode(one) + ";;";
-                }
+                return list_notes;
             }
             else
             {
-                answer += "result=0;";
+                return new List<Note>();
             }
-            return answer;
         }
 
         public string remind(string email)
@@ -108,7 +111,7 @@ namespace myServer
 
         public string add_notification(string name, string user, double x, double y)
         {
-            string res = "-1";
+            string res = "";
             if (allUsers.ContainsKey(user))
             {
                 Note newOne = new Note(name, user, x, y, getAmountNotes());
@@ -141,7 +144,7 @@ namespace myServer
 
         public string registration(string log, string pas)
         {
-            string res = "-1";
+            string res = "";
             if (!allUsers.ContainsKey(log))
             {
                 // проверка на валидность емаила
