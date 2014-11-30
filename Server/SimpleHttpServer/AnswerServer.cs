@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Web.Helpers;
+using System.Web;
 
 
 
@@ -45,7 +46,8 @@ namespace myServer
         }
         
         public string getAnswer (string query) {
-            Console.WriteLine("called getAsnwer!");
+            // раскодируем url
+            query = HttpUtility.UrlDecode(query);
 
             string answer = "default value";
 
