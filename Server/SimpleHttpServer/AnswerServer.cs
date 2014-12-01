@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Web.Helpers;
+using System.Web;
 
 
 
@@ -16,6 +17,7 @@ using System.Web.Helpers;
     Использует:
  * EmailValidator
  * APIexecutor
+ * Query (и его производные подклассы) - для парсинга запросов и создания ответов.
     
     Используется:
  * HttpServer
@@ -35,16 +37,17 @@ namespace myServer
     class AnswerServer
     {
         private Validator validator;
-        private APIexecuter api;
+        private APIexecuter api_executer;
 
         public AnswerServer(Hashtable one, Hashtable two)
         {
             validator = new Validator();
-            api = new APIexecuter(ref one, ref two);
+            api_executer = new APIexecuter(ref one, ref two);
         }
         
         public string getAnswer (string query) {
-            Console.WriteLine("called getAsnwer!");
+            // раскодируем url
+            query = HttpUtility.UrlDecode(query);
 
             string answer = "default value";
 
@@ -68,34 +71,58 @@ namespace myServer
                 
             case "add_note":
                 Console.WriteLine("add_notification!");
-                    
-                answer = "func=add_notification;result=" + api.add_notification(Json.Decode<AddNoteQuery>(query).name,
-                    Json.Decode<AddNoteQuery>(query).user,
-                    Json.Decode<AddNoteQuery>(query).x,
-                    Json.Decode<AddNoteQuery>(query).y) + ";";
-                     
+                AddNoteQuery addNoteIn = Json.Decode<AddNoteQuery>(query);
+                Query addNoteOut = new Query();
+                addNoteOut.function = method;
+                addNoteOut.result = api_executer.add_notification(addNoteIn.name, addNoteIn.user, addNoteIn.x, addNoteIn.y);
+                answer = Json.Encode(addNoteOut);      
                 break;
             
                 case "registration":
                     Console.WriteLine("registration!");
-                    answer = "func=registration;result=" + api.registration(Json.Decode<RegistrationQuery>(query).email,
-                                                                            Json.Decode<RegistrationQuery>(query).password) + ";";
+                    RegistrationQuery registrationIn = Json.Decode<RegistrationQuery>(query);
+                    Query registrationOut = new Query();
+                    registrationOut.function = method;
+                    registrationOut.result = api_executer.registration(registrationIn.email, registrationIn.password);
+                    answer = Json.Encode(registrationOut);
                     break;
                 
                 case "entrance":
                     Console.WriteLine("entrance!");
-                    answer = "func=entrance;result=" + api.entrance(Json.Decode<EntranceQuery>(query).email,
-                                                                    Json.Decode<EntranceQuery>(query).password) + ";";
+                    EntranceQuery entranceIn = Json.Decode<EntranceQuery>(query);
+                    Query entranceOut = new Query();
+                    entranceOut.function = method;
+                    entranceOut.result = api_executer.entrance(entranceIn.email, entranceIn.password);
+                    answer = Json.Encode(entranceOut);
                     break;
                 
                 case "remind":
                     Console.WriteLine("remind!");
-                    answer = "func=remind;result=" + api.remind(Json.Decode<RemindQuery>(query).email) + ";";
+                    RemindQuery remindIn = Json.Decode<RemindQuery>(query);
+                    Query remindOut = new Query();
+                    remindOut.function = method;
+                    remindOut.result = api_executer.remind(remindIn.email);
+                    answer = Json.Encode(remindOut);
                     break;
                 
                 case "get_notes":
                     Console.WriteLine("get_notification!");
-                    answer = "func=get_notification;" + api.get_notification(Json.Decode<GetNotesQuery>(query).email);
+                    GetNotesQuery getNotesIn = Json.Decode<GetNotesQuery>(query);
+                    GetNotesAnswer getNotesOut = new GetNotesAnswer();
+                    getNotesOut.function = method;
+                    List<Note> user_notes = api_executer.get_notification(getNotesIn.email);
+                    if (user_notes.Count == 0)
+                    {
+                        getNotesOut.result = "0";
+                        getNotesOut.notes = null;
+                    }
+                    else
+                    {
+                        getNotesOut.result = "1";
+                        getNotesOut.notes = user_notes;
+                    }
+                    answer = Json.Encode(getNotesOut);
+                    //answer = "func=get_notification;" + api_executer.get_notification(Json.Decode<GetNotesQuery>(query).email);
                     break;
                  
             }

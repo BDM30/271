@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 /*
     Query:
- * класс для парсинга запросов к серверу. От него будут наследоваться конкретные запросы из API
+ * Все запросы к северу и ответы от него в формате JSON. Этот класс нужен для создания результата и парсинга запросов.
+ * От него наследуются более конкретные классы.
     атрибуты:
  * public string function - название функции
  * public string result - возвращаемый результат
@@ -40,6 +41,11 @@ using System.Threading.Tasks;
  * класс запроса на получение всех напоминалок
     атрибуты:
  * public string email;
+ 
+    GetNotesAnswer : Query
+ * класс для вывода всех напоминалок
+    атрибуты:
+ * public List<Note> notes - храним все напоминалки пользователя
 
  */
 
@@ -62,6 +68,14 @@ namespace myServer
         {
 
         }
+    }
+
+    class GetNotesAnswer : Query
+    {   
+        public GetNotesAnswer()
+        {
+        }
+        public List<Note> notes;
     }
 
     class AddNoteQuery : Query

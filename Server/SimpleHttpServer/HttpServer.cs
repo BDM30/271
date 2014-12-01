@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Collections;
 using System.Web.Helpers;
+using System.Web;
 
 /*
     HttpServer:
@@ -166,7 +167,7 @@ namespace myServer
             //Console.WriteLine("request: {0}", p.http_url);
 
             string query = (p.http_url).Trim(new Char[] { '/' });
-            Console.WriteLine("q = {0}", query);
+            Console.WriteLine("q = {0}", HttpUtility.UrlDecode(query));
      
             readUsers();
             readNotes();
