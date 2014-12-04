@@ -26,5 +26,5 @@ A: {"function":"add_note","result":"0"} -- пользователь с таки�
 --Получить все напоминания.
 Q: {"function":"get_notes","email":"starson4588@gmail.com"}
 A: {"notes":[{"id":0,"name":"test1","owner":"starson4588@gmail.com","x":3,"y":4}],"function":"get_notes","result":"1"} - напоминания есть
-A: {"notes":null,"function":"get_notes","result":"0"} -- у пользователя нет напоминаний.
+A: {"notes":"null","function":"get_notes","result":"0"} -- у пользователя нет напоминаний.
 
