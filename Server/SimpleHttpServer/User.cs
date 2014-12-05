@@ -33,10 +33,9 @@ namespace myServer
 {
     class User
     {
-
-        public int id;
-        public string email;
-        public string password;
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
         public User()
         {
@@ -45,16 +44,16 @@ namespace myServer
 
         public User(int idIn, string emailIn, string passwordIn)
         {
-            id = idIn;
-            email = emailIn;
-            password = passwordIn;
+            Id = idIn;
+            Email = emailIn;
+            Password = passwordIn;
         }
         public override bool Equals(Object obj)
         {
             if (obj == null || !(obj is User))
                 return false;
             else
-                return email == ((User)obj).email && password == ((User)obj).password;
+                return Email == ((User)obj).Email && Password == ((User)obj).Password;
         }
     }
 }

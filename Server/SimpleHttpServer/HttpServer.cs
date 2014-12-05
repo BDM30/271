@@ -9,6 +9,7 @@ using System.Threading;
 using System.Collections;
 using System.Web.Helpers;
 using System.Web;
+using System.Threading.Tasks;
 
 /*
     HttpServer:
@@ -77,6 +78,7 @@ namespace myServer
         }
 
         private  void readUsers() {
+            Console.WriteLine("HttpServer.readUsers()");
             allUsers = new Hashtable();
             amountUsers = 0;
 
@@ -89,9 +91,8 @@ namespace myServer
                 if (line.Length > 0)
                 {
                     User new_one = Json.Decode<User>(line);
-                    new_one.id = amountUsers++; 
-                    allUsers.Add(new_one.email, new_one);
-                    amountUsers++;
+                    new_one.Id = amountUsers++; 
+                    allUsers.Add(new_one.Email, new_one);
                 }
             }
             file.Close();
@@ -126,20 +127,20 @@ namespace myServer
                     if (line.Length > 0)
                     {
                         Note new_one = Json.Decode<Note>(line);
-                        new_one.id = amountNotes++;
+                        new_one.Id = amountNotes++;
                         // если есть какие-то данные в HT
-                        if (allNotes.ContainsKey(new_one.owner))
+                        if (allNotes.ContainsKey(new_one.Owner))
                         {
-                            List<Note> list_notes = (List<Note>)allNotes[new_one.owner]; 
+                            List<Note> list_notes = (List<Note>)allNotes[new_one.Owner]; 
                             list_notes.Add(new_one);
-                            allNotes.Remove(new_one.owner);
-                            allNotes.Add(new_one.owner, list_notes);
+                            allNotes.Remove(new_one.Owner);
+                            allNotes.Add(new_one.Owner, list_notes);
                         }
                         else
                         {
                             List<Note> list_notes = new List<Note>();
                             list_notes.Add(new_one);
-                            allNotes.Add(new_one.owner, list_notes);
+                            allNotes.Add(new_one.Owner, list_notes);
                             
                         }
                     }       
@@ -168,9 +169,12 @@ namespace myServer
 
             string query = (p.http_url).Trim(new Char[] { '/' });
             Console.WriteLine("q = {0}", HttpUtility.UrlDecode(query));
-     
-            readUsers();
-            readNotes();
+
+            Parallel.Invoke(
+                () => readUsers(),
+                () => readNotes()
+            );
+            
 
             answerFromServer = new AnswerServer(allNotes, allUsers);
 

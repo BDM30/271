@@ -1,4 +1,1 @@
 {"id":0,"email":"starson4588@gmail.com","password":"koolherc"}
-{"id":3,"email":"test2@mail.com","password":"test"}
-{"id":2,"email":"test@mail.com","password":"test"}
-{"id":4,"email":"test1@mail.com","password":"test"}
