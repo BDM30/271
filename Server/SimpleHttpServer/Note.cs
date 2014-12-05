@@ -19,11 +19,11 @@ using System.Threading.Tasks;
  * HttpServer
  
     Атрибуты:
- *  public double x; - координата
- *  public double y;
- *  public int id;
- *  public string name;
- *  public string owner; - email владельца
+ *  public double X; - координата
+ *  public double Y;
+ *  public int Id;
+ *  public string Name;
+ *  public string Owner; - email владельца
     
     Методы:
  * == - равенство без id? 1 : 0
@@ -37,11 +37,11 @@ namespace myServer
 {
     public class Note
     {
-        public int id;
-        public string name;
-        public string owner;
-        public double x;
-        public double y;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Owner { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
 
         public Note()
         {
@@ -49,11 +49,11 @@ namespace myServer
         }
         public Note(string name_, string owner_, double x_, double y_, int id_)
         {
-            id = id_;
-            x = x_;
-            y = y_;
-            name = name_;
-            owner = owner_;
+            Id = id_;
+            X = x_;
+            Y = y_;
+            Name = name_;
+            Owner = owner_;
         }
 
         public override bool Equals(Object obj)
@@ -61,8 +61,8 @@ namespace myServer
             if (obj == null || !(obj is Note))
                 return false;
             else
-                return x == ((Note)obj).x && y == ((Note)obj).y &&
-                    name == ((Note)obj).name && owner == ((Note)obj).owner;
+                return X == ((Note)obj).X && Y == ((Note)obj).Y &&
+                    Name == ((Note)obj).Name && Owner == ((Note)obj).Owner;
         }       
     }
 }
