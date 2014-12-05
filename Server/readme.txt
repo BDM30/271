@@ -15,8 +15,8 @@ A: {"Function":"registration","Result":"2"} -- некорректный email
 
 --Забыть пароль
 Q: {"function":"remind","email":"starson4588@gmail.com"}
-A: {"Runction":"remind","Result":"0"} -- пользователя с таким email не найдено
-A: {"Runction":"remind","Result":"1"} -- мы успешно выслали вам ваш вароль
+A: {"Function":"remind","Result":"0"} -- пользователя с таким email не найдено
+A: {"Function":"remind","Result":"1"} -- мы успешно выслали вам ваш вароль
 
 --Добавить напоминание
 Q: {"function":"add_note","name":"test1","user":"starson4588@gmail.com","x":3,"y":4}
