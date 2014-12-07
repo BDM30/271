@@ -26,3 +26,4 @@ C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\obj\x86\Debug\SimpleHttpSer
 C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.csprojResolveAssemblyReference.cache
 C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\bin\Debug\SimpleHttpServer.exe
 C:\Users\stars_000\Desktop\Server\1\SimpleHttpServer\bin\Debug\SimpleHttpServer.pdb
+C:\Users\stars_000\Desktop\Server\SimpleHttpServer\obj\x86\Debug\SimpleHttpServer.csprojResolveAssemblyReference.cache

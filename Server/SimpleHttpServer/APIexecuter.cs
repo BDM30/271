@@ -183,7 +183,7 @@ namespace myServer
             List<string> lines = new List<string>();
             foreach (List<Note> list_notes in allNotes.Values)
             {
-                foreach (Note note in list_notes)
+                foreach (var note in list_notes)
                 {
                     lines.Add(Json.Encode(note));
                 }
@@ -201,7 +201,7 @@ namespace myServer
             ICollection valueCollection = allUsers.Values;
             List<string> lines = new List<string>();
             // добавлять в массив строк нужно
-            foreach (User one in valueCollection)
+            foreach (var one in valueCollection)
             {
                 lines.Add(Json.Encode(one));
                 // создать файл с именем id пользователя
