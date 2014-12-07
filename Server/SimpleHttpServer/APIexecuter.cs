@@ -44,7 +44,6 @@ using System.Web.Helpers;
     2 - email введен неверно
  * private void saveInFileNotes() - сохранить allNotes в allNotes.txt , формат хранения определен классом Note
  * private void saveInFileUsers() - сохранить allUsers в allUsers.txt , формат хранения определен классом User
- * private int getAmountNotes() - получить количество Note в allNotes
 */
 
 namespace myServer
@@ -114,7 +113,7 @@ namespace myServer
             string res = "";
             if (allUsers.ContainsKey(user))
             {
-                Note newOne = new Note(name, user, x, y, getAmountNotes());
+                Note newOne = new Note(name, user, x, y);
                 List<Note> noteList;
                 if (allNotes.ContainsKey(user))
                 {
@@ -150,7 +149,7 @@ namespace myServer
                 // проверка на валидность емаила
                 if (validator.IsValidEmail(log))
                 {
-                    User newGuy = new User(allUsers.Count, log, pas);
+                    User newGuy = new User(log, pas);
                     allUsers.Add(log, newGuy);
                     saveInFileUsers();
                     res = "1";
@@ -193,7 +192,7 @@ namespace myServer
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allNotes.txt", slot);
-            Console.WriteLine("saved {0} notes", getAmountNotes());
+            Console.WriteLine("saved {0} notes", Note.amount_notes);
         }
 
         private void saveInFileUsers()
@@ -209,19 +208,6 @@ namespace myServer
             }
             string[] slot = lines.ToArray();
             System.IO.File.WriteAllLines(@"allUsers.txt", slot);
-        }
-
-        private int getAmountNotes()
-        {
-            int res = 0;
-            foreach (List<Note> list_notes in allNotes.Values)
-            {
-                foreach (Note x in list_notes)
-                {
-                    res++;
-                }
-            }
-            return res;
         }
     }
 }

@@ -17,8 +17,11 @@ using System.Threading.Tasks;
     Используется:
  * APIexecuter
  * HttpServer
+    
+    Поля:
+ * public static int amount_notes; - класс будет чекать кол-во созданных. И сам назначать Id при добавлении
  
-    Атрибуты:
+    Свойства:
  *  public double X; - координата
  *  public double Y;
  *  public int Id;
@@ -26,10 +29,13 @@ using System.Threading.Tasks;
  *  public string Owner; - email владельца
     
     Методы:
- * == - равенство без id? 1 : 0
+ * == != - Owner Name X Y совпали? 1 : 0 (не используется)
+ * < > - сравнения по Id 1 : 0 (не используется)
  * public Note(string name_, string owner_, double x_, double y_, int id_) - инициализация
  * public override string ToString() - на выходе строка в формате хранения в файле и оправки клиенту.
  * public Note() - без него не читается из JSON. Весьма любопытный факт
+ * public override bool Equals(Object obj) - эквивалентны ли объекты? (не используется)
+ * public string this[int index] = Мы можем по индексу вызывать свой-ства Note. 0 = Email 1 = Password (не используется)
 */
 
 
@@ -37,6 +43,9 @@ namespace myServer
 {
     public class Note
     {
+
+        public static int amount_notes;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Owner { get; set; }
@@ -45,11 +54,10 @@ namespace myServer
 
         public Note()
         {
-
         }
-        public Note(string name_, string owner_, double x_, double y_, int id_)
+        public Note(string name_, string owner_, double x_, double y_)
         {
-            Id = id_;
+            Id = amount_notes++;
             X = x_;
             Y = y_;
             Name = name_;
@@ -63,6 +71,50 @@ namespace myServer
             else
                 return X == ((Note)obj).X && Y == ((Note)obj).Y &&
                     Name == ((Note)obj).Name && Owner == ((Note)obj).Owner;
-        }       
+        }
+
+        // операторы 
+        public static bool operator ==(Note a, Note b)
+        {
+            return (a.Name == b.Name && a.Owner == b.Owner && a.X == b.X && a.Y == b.Y) ? true : false;
+        }
+        public static bool operator !=(Note a, Note b)
+        {
+            return (a.Name == b.Name && a.Owner == b.Owner && a.X == b.X && a.Y == b.Y) ? false : true;
+        }
+        public static bool operator <(Note a, Note b)
+        {
+            return (a.Id < b.Id) ? true : false;
+        }
+        public static bool operator >(Note a, Note b)
+        {
+            return (a.Id > b.Id) ? true : false;
+        }
+
+        // зафигачим индексацию целочисленную 
+        // PS можно также индексировать стрингом
+        // 0 = Name 1 = Owner
+        public string this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return Name;
+                    case 1: return Owner;
+                    default: throw new ArgumentOutOfRangeException("index", "Only index 0-1 valid!");
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case 0: Name = value; break;
+                    case 1: Owner = value; break;
+                    default: throw new ArgumentOutOfRangeException("index", "Only index 0-1 valid!");
+                }
+            }
+        }
     }
 }

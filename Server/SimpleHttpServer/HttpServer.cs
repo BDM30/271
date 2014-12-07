@@ -57,8 +57,6 @@ namespace myServer
         private TcpListener listener;
         private Hashtable allUsers;
         private Hashtable allNotes;
-        private int amountUsers;
-        private int amountNotes;
 
         private AnswerServer answerFromServer;
         private ConsoleManager consoleManager;
@@ -71,8 +69,6 @@ namespace myServer
         {
             this.port = port;
             consoleManager = new ConsoleManager();
-            amountNotes = 0;
-            amountUsers = 0;
             allUsers = new Hashtable();
             allNotes = new Hashtable();
         }
@@ -80,7 +76,7 @@ namespace myServer
         private  void readUsers() {
             Console.WriteLine("HttpServer.readUsers()");
             allUsers = new Hashtable();
-            amountUsers = 0;
+            User.amount_users = 0;
 
             string line;
             System.IO.StreamReader file =
@@ -91,7 +87,7 @@ namespace myServer
                 if (line.Length > 0)
                 {
                     User new_one = Json.Decode<User>(line);
-                    new_one.Id = amountUsers++; 
+                    new_one.Id = User.amount_users++; 
                     allUsers.Add(new_one.Email, new_one);
                 }
             }
@@ -116,10 +112,10 @@ namespace myServer
 
         private void readNotes()
         {
-                    allNotes = new Hashtable();
-                    amountNotes = 0;
+            Note.amount_notes = 0;
 
-                Console.WriteLine("before read {0} notes", getAmountNotes());
+                allNotes = new Hashtable();
+                Console.WriteLine("before read {0} notes", Note.amount_notes);
                 string line;
                 System.IO.StreamReader file = new System.IO.StreamReader(@"allNotes.txt");
                 while ((line = file.ReadLine()) != null)
@@ -127,7 +123,7 @@ namespace myServer
                     if (line.Length > 0)
                     {
                         Note new_one = Json.Decode<Note>(line);
-                        new_one.Id = amountNotes++;
+                        new_one.Id = Note.amount_notes++;
                         // если есть какие-то данные в HT
                         if (allNotes.ContainsKey(new_one.Owner))
                         {
@@ -146,23 +142,10 @@ namespace myServer
                     }       
                 }
                 file.Close();
-                Console.WriteLine("after read {0} notes", getAmountNotes());
+                Console.WriteLine("after read {0} notes", Note.amount_notes);
 
         }
-
-        private int getAmountNotes()
-        {
-            int res = 0;
-            foreach (List<Note> list_notes in allNotes.Values)
-            {
-                foreach (Note x in list_notes)
-                {
-                    res++;
-                }
-            }
-            return res;
-        }
-        
+    
         public  void handleGETRequest(HttpProcessor p)
         {
             //Console.WriteLine("request: {0}", p.http_url);
