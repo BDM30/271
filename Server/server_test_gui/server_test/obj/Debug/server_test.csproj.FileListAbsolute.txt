@@ -1,0 +1,9 @@
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\bin\Debug\server_test.exe.config
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\bin\Debug\server_test.exe
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\bin\Debug\server_test.pdb
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.csprojResolveAssemblyReference.cache
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.Form1.resources
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.Properties.Resources.resources
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.csproj.GenerateResource.Cache
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.exe
+c:\users\stars_000\documents\visual studio 2013\Projects\server_test\server_test\obj\Debug\server_test.pdb
