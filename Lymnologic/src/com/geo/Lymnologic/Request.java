@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 public class Request {
 
     //TextView result;
-    public static String serverIP = "http://192.168.10.101:11000/"; //217.197.4.107
+    public static String serverIP = "http://simpleas123.azurewebsites.net/"; //217.197.4.107
     public static String result;
     public static String resultInput = "fstinit";
     //new HttpAsyncTask().execute(query); - вызов

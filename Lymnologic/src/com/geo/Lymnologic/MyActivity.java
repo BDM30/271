@@ -28,7 +28,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_my);
 
         myText = (EditText) findViewById(R.id.editText);
-        myText.setText("type smth");
+        myText.setText("api/users/registration?login=11&password=kool&nickname=bdm&gender=false");
 
         send = (Button) findViewById(R.id.button);
         send.setText("Send");
@@ -69,33 +69,24 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
             case R.id.http_btn:
 
-                myText.setText("тык");
-                //Пример http-запроса
-                //Register test = new Register();
-                //test.execute(Request.serverIP + "func=registration;email=starson450@yandex.ru;password=vlad;");
-                /*try {
-                    lol = test.get(10, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    Toast.makeText(this, "Сервер не отвечает.", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                Toast.makeText(this, lol, Toast.LENGTH_LONG).show();*/
+
                 JSONObject reg_query = new JSONObject();
                 try {
-                    reg_query .put("function", "registration");
-                    //reg_query .put("email", email.getText().toString());
-                    //reg_query .put("password", pass.getText().toString());
-                    reg_query .put("email", "test2@mail.com");
-                    reg_query .put("password", "test");
+                    /**reg_query.put("Block", "users");
+                    reg_query.put("Function", "registration");
+                    reg_query.put("gender", "false");
+                    reg_query.put("nickname", "android");
+                    reg_query.put("password", "dddd");
+                    reg_query.put("login", "andriod3000");
+                     */
+                    reg_query.put("nickname", "android");
                 }
+
                 catch(JSONException ex) {
                     ex.printStackTrace();
                 }
-                String allQuery = Request.serverIP +  Uri.encode(reg_query.toString());
+                String allQuery = Request.serverIP + "api/users/registration?" +  Uri.encode(reg_query.toString());
+                myText.setText(allQuery);
                 Toast.makeText(this, allQuery, Toast.LENGTH_LONG).show();
                 new Register().execute(allQuery);
                 break;
@@ -122,11 +113,8 @@ public class MyActivity extends Activity implements View.OnClickListener {
                     Intent intent = new Intent(getBaseContext(), Notifications.class);
                     startActivity(intent);
                 }
-
             } catch (JSONException ex) {
                 ex.printStackTrace();
-
-
             }
         }
     }

@@ -5,12 +5,15 @@ package com.geo.Lymnologic;
  */
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.util.concurrent.ExecutionException;
+import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Colored Lime on 24.10.2014.
@@ -41,23 +44,40 @@ public class Registration extends Activity implements View.OnClickListener{
             case R.id.reg_btn:
                 email = email_edit.getText().toString();
                 password = password_edit.getText().toString();
-
-                //Тестовый вариант регистрации
-                String result = "No answer =(";
-                Request.HttpAsyncTask reg = new Request.HttpAsyncTask();
-                reg.execute(Request.serverIP + "func=registration;email=" + email + ";password=" + password + ";");
-                try {
-                    result = reg.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                email_edit.setText(result);
+                String query = "login=" + email + "&password=" + password + "&nickname=aDefault&gender=false";
+                String allQuery = Request.serverIP + "api/users/registration?" +  query;
+                Toast.makeText(this, allQuery, Toast.LENGTH_LONG).show();
+                new Register().execute(allQuery);
                 break;
-
             default:
                 break;
         }
     }
+
+    public class Register extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return Request.GET(urls[0]);
+        }
+        protected void onPostExecute(String res) {
+            String method = "";
+            String result = "";
+            try {
+                JSONObject dataJsonObj = new JSONObject(res);
+                result = dataJsonObj.getString("Result");
+                method = dataJsonObj.getString("Function");
+                email_edit.setText(method + result);
+                if ("registration success".equals(method +" "+ result)) {
+                    Intent intent = new Intent(getBaseContext(), Notifications.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getBaseContext(), "Такой логин уже занят или произошла ошибка.", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
+
