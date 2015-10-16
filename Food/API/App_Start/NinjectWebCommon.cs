@@ -67,7 +67,7 @@ namespace API.App_Start
         {
           System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver =
             new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
-          kernel.Bind<ICommonRepository<User>>().To<EFUserRepository>();
+          kernel.Bind<ICommonRepository<User>>().To<UserRepository>();
     }        
     }
 }

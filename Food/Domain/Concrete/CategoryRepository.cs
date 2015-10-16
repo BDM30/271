@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Domain.Concrete
 {
-  public class UserRepository : ICommonRepository<User>
+  public class CategoryRepository : ICommonRepository<User>
   {
     private FoodContext context = new FoodContext();
 
