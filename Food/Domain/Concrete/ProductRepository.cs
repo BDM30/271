@@ -2,41 +2,45 @@
 using Domain.Abstract;
 using Domain.Entities;
 
+
+
 namespace Domain.Concrete
 {
-  public class ProductRepository : ICommonRepository<User>
+  public class ProductRepository : ICommonRepository<Product>
   {
     private FoodContext context = new FoodContext();
 
-    public IEnumerable<User> Data
+    public IEnumerable<Product> Data
     {
-      get { return context.Users; }
+      get { return context.Products; }
     }
 
-    public void SaveData(User data)
+    public void SaveData(Product data)
     {
-      if (data.UserID == 0)
+      if (data.ProductID == 0)
       {
-        context.Users.Add(data);
+        context.Products.Add(data);
       }
       else
       {
-        User dbEntry = context.Users.Find(data.UserID);
+        Product dbEntry = context.Products.Find(data.ProductID);
         if (dbEntry != null)
         {
           dbEntry.Name = data.Name;
-          dbEntry.Password = data.Password;
+          dbEntry.AmountDefault = data.AmountDefault;
+          dbEntry.CategoryID = data.CategoryID;
+          dbEntry.UnitMeasureID = data.UnitMeasureID;
         }
       }
       context.SaveChanges();
     }
 
-    public User DeleteData(int userId)
+    public Product DeleteData(int productId)
     {
-      User dbEntry = context.Users.Find(userId);
+      Product dbEntry = context.Products.Find(productId);
       if (dbEntry != null)
       {
-        context.Users.Remove(dbEntry);
+        context.Products.Remove(dbEntry);
         context.SaveChanges();
       }
       return dbEntry;

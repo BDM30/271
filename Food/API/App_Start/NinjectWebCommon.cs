@@ -67,7 +67,14 @@ namespace API.App_Start
         {
           System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver =
             new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
+
           kernel.Bind<ICommonRepository<User>>().To<UserRepository>();
+          kernel.Bind<ICommonRepository<UserProduct>>().To<UserProductRepository>();
+          kernel.Bind<ICommonRepository<Product>>().To<ProductRepository>();
+          kernel.Bind<ICommonRepository<UnitMeasure>>().To<UnitMeasureRepository>();
+          kernel.Bind<ICommonRepository<Category>>().To<CategoryRepository>();
+          kernel.Bind<ICommonRepository<Ingredient>>().To<IngredientRepository>();
+          kernel.Bind<ICommonRepository<Recipe>>().To<RecipeRepository>();
     }        
     }
 }

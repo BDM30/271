@@ -4,39 +4,38 @@ using Domain.Entities;
 
 namespace Domain.Concrete
 {
-  public class CategoryRepository : ICommonRepository<User>
+  public class CategoryRepository : ICommonRepository<Category>
   {
     private FoodContext context = new FoodContext();
 
-    public IEnumerable<User> Data
+    public IEnumerable<Category> Data
     {
-      get { return context.Users; }
+      get { return context.Categories; }
     }
 
-    public void SaveData(User data)
+    public void SaveData(Category data)
     {
-      if (data.UserID == 0)
+      if (data.CategoryID == 0)
       {
-        context.Users.Add(data);
+        context.Categories.Add(data);
       }
       else
       {
-        User dbEntry = context.Users.Find(data.UserID);
+        Category dbEntry = context.Categories.Find(data.CategoryID);
         if (dbEntry != null)
         {
           dbEntry.Name = data.Name;
-          dbEntry.Password = data.Password;
         }
       }
       context.SaveChanges();
     }
 
-    public User DeleteData(int userId)
+    public Category DeleteData(int categoryId)
     {
-      User dbEntry = context.Users.Find(userId);
+      Category dbEntry = context.Categories.Find(categoryId);
       if (dbEntry != null)
       {
-        context.Users.Remove(dbEntry);
+        context.Categories.Remove(dbEntry);
         context.SaveChanges();
       }
       return dbEntry;

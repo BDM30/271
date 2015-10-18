@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ICommonRepository.cs" />
+    <Compile Include="Concrete\UnitMeasureRepository.cs" />
     <Compile Include="Concrete\FoodContext.cs" />
     <Compile Include="Concrete\CategoryRepository.cs" />
     <Compile Include="Concrete\IngredientRepository.cs" />

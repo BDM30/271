@@ -23,7 +23,7 @@ namespace Domain.Abstract
   {
     IEnumerable<T> Data { get; }
     void SaveData(T data);
-    T DeleteData(int userId);
+    T DeleteData(int userProductId);
   } 
 
 }
