@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
@@ -19,6 +20,16 @@ namespace API.Controllers.Entities
     public IEnumerable<Recipe> GetRecipes()
     {
       return recipeRepository.Data;
+    }
+
+    [HttpGet]
+    [Route("Recipe/getby")]
+    public IEnumerable<Recipe> GetRecipeBy([FromUri] Recipe r)
+    {
+      return (from x in recipeRepository.Data
+              where (x.Name == r.Name && x.Name != "" || x.ProcessDescription != r.ProcessDescription && x.ProcessDescription != ""
+              || x.RecipeID != r.RecipeID && x.RecipeID != 0)
+              select x);
     }
   }
 }

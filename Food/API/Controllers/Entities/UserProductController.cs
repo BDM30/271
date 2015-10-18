@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
@@ -19,6 +20,19 @@ namespace API.Controllers.Entities
     public IEnumerable<UserProduct> GetUserProducts()
     {
       return userProductRepository.Data;
+    }
+
+    [HttpGet]
+    [Route("UserProduct/getby")]
+    public IEnumerable<UserProduct> GetUserProductBy([FromUri] UserProduct p)
+    {
+      return (from x in userProductRepository.Data
+              where (x.UserID == p.UserID && x.UserID != 0 || x.Amount == p.Amount && x.Amount != 0
+                     || x.CategoryID == p.CategoryID && x.CategoryID != 0 || 
+                     x.ExpirationDate == p.ExpirationDate && x.ExpirationDate != "" ||
+                     x.ProductID == p.ProductID && x.ProductID != 0 ||
+                     x.UserProductID == p.UserProductID && x.UserProductID != 0) 
+              select x);
     }
   }
 }

@@ -29,11 +29,12 @@ namespace API.Controllers
 
       [HttpGet]
       [Route("User/getby")]
-      public IEnumerable<User> GetUserBy([FromUri]User user)
+      public IEnumerable<User> GetUserBy([FromUri] User user)
       {
+      // Сработает если идет совпадение хотябы по 1 не пустому параметру
         return (from x in userRepository.Data
-          where (x.UserID == user.UserID && x.UserID != 0  || x.Name == user.Name && x.Name != ""
-          || x.Password == user.Password && x.Password != "")
+          where (x.UserID == user.UserID && x.UserID != 0 || x.Name == user.Name && x.Name != ""
+                 || x.Password == user.Password && x.Password != "")
           select x);
       } 
   }
