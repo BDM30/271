@@ -50,14 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ICommonRepository.cs" />
-    <Compile Include="Concrete\UnitMeasureRepository.cs" />
+    <Compile Include="Concrete\Repositories\UnitMeasureRepository.cs" />
     <Compile Include="Concrete\FoodContext.cs" />
-    <Compile Include="Concrete\CategoryRepository.cs" />
-    <Compile Include="Concrete\IngredientRepository.cs" />
-    <Compile Include="Concrete\RecipeRepository.cs" />
-    <Compile Include="Concrete\ProductRepository.cs" />
-    <Compile Include="Concrete\UserProductRepository.cs" />
-    <Compile Include="Concrete\UserRepository.cs" />
+    <Compile Include="Concrete\Repositories\CategoryRepository.cs" />
+    <Compile Include="Concrete\Repositories\IngredientRepository.cs" />
+    <Compile Include="Concrete\Repositories\RecipeRepository.cs" />
+    <Compile Include="Concrete\Repositories\ProductRepository.cs" />
+    <Compile Include="Concrete\Repositories\UserProductRepository.cs" />
+    <Compile Include="Concrete\Repositories\UserRepository.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Ingredient.cs" />
     <Compile Include="Entities\Product.cs" />
