@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
 
@@ -11,6 +12,13 @@ namespace API.Controllers.Entities
     public IngredientController(ICommonRepository<Ingredient> ingredients)
     {
       ingredientRepository = ingredients;
+    }
+
+    [Route("Ingredient/all")]
+    [HttpGet]
+    public IEnumerable<Ingredient> GetIngredients()
+    {
+      return ingredientRepository.Data;
     }
   }
 }

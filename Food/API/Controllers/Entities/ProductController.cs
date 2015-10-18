@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
 
@@ -11,6 +12,13 @@ namespace API.Controllers.Entities
     public ProductController(ICommonRepository<Product> products)
     {
       productRepository = products;
+    }
+
+    [Route("Product/all")]
+    [HttpGet]
+    public IEnumerable<Product> GetProducts()
+    {
+      return productRepository.Data;
     }
   }
 }

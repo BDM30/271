@@ -65,9 +65,32 @@
     <Compile Include="Entities\UnitMeasure.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserProduct.cs" />
+    <Compile Include="Migrations\201510141946234_InitialCreate.cs" />
+    <Compile Include="Migrations\201510141946234_InitialCreate.Designer.cs">
+      <DependentUpon>201510141946234_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510181105567_AddedAllEntities.cs" />
+    <Compile Include="Migrations\201510181105567_AddedAllEntities.Designer.cs">
+      <DependentUpon>201510181105567_AddedAllEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510181130134_AddedShortNameFieldToUnitMeasure.cs" />
+    <Compile Include="Migrations\201510181130134_AddedShortNameFieldToUnitMeasure.Designer.cs">
+      <DependentUpon>201510181130134_AddedShortNameFieldToUnitMeasure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510141946234_InitialCreate.resx">
+      <DependentUpon>201510141946234_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510181105567_AddedAllEntities.resx">
+      <DependentUpon>201510181105567_AddedAllEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510181130134_AddedShortNameFieldToUnitMeasure.resx">
+      <DependentUpon>201510181130134_AddedShortNameFieldToUnitMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

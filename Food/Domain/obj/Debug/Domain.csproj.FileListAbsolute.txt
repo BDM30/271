@@ -8,3 +8,7 @@ C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\bin\Debug\EntityFramewor
 C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\bin\Debug\EntityFramework.xml
 C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\obj\Debug\Domain.Migrations.InitialCreate.resources
+C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\obj\Debug\Domain.csproj.GenerateResource.Cache
+C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\obj\Debug\Domain.Migrations.AddedAllEntities.resources
+C:\Users\stars_000\Desktop\s123\Project\271\Food\Domain\obj\Debug\Domain.Migrations.AddedShortNameFieldToUnitMeasure.resources
