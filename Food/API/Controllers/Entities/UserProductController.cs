@@ -43,5 +43,13 @@ namespace API.Controllers.Entities
       userProductRepository.SaveData(up);
       return "ok";
     }
+
+    [HttpGet]
+    [Route("UserProduct/remove")]
+    public string RemoveUserProduct(int id)
+    {
+      userProductRepository.DeleteData(id);
+      return "ok";
+    }
   }
 }

@@ -40,5 +40,13 @@ namespace API.Controllers.Entities
       recipeRepository.SaveData(r);
       return "ok";
     }
+
+    [HttpGet]
+    [Route("Recipe/remove")]
+    public string RemoveRecipe(int id)
+    {
+      recipeRepository.DeleteData(id);
+      return "ok";
+    }
   }
 }

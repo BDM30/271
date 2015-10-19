@@ -41,5 +41,13 @@ namespace API.Controllers.Entities
       return "ok";
     }
 
+    [HttpGet]
+    [Route("Category/remove")]
+    public string RemoveCategory(int id)
+    {
+      categoryRepository.DeleteData(id);
+      return "ok";
+    }
+
   }
 }

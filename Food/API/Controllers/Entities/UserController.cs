@@ -46,5 +46,14 @@ namespace API.Controllers
         userRepository.SaveData(user);
         return "ok";
       }
+
+    [HttpGet]
+    [Route("User/remove")]
+    public string RemoveUser(int id)
+    {
+      userRepository.DeleteData(id);
+      return "ok";
+    }
+
   }
 }

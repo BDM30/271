@@ -40,5 +40,13 @@ namespace API.Controllers.Entities
       unitMeasureRepository.SaveData(um);
       return "ok";
     }
+
+    [HttpGet]
+    [Route("UnitMeasure/remove")]
+    public string RemoveUnitMeasure(int id)
+    {
+      unitMeasureRepository.DeleteData(id);
+      return "ok";
+    }
   }
 }
