@@ -34,5 +34,14 @@ namespace API.Controllers.Entities
               x.ProductID == p.ProductID && x.ProductID != 0)
               select x);
     }
+
+    // если id валидный - то редактирование, иначе создастся новый
+    [HttpGet]
+    [Route("Product/save")]
+    public string SaveProduct([FromUri] Product r)
+    {
+      productRepository.SaveData(r);
+      return "ok";
+    }
   }
 }

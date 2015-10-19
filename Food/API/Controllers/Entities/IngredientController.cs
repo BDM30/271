@@ -36,5 +36,14 @@ namespace API.Controllers.Entities
               x.IngredientID == i.IngredientID && x.IngredientID != 0)
               select x);
     }
+
+    // если id валидный - то редактирование, иначе создастся новый
+    [HttpGet]
+    [Route("Ingredient/save")]
+    public string SaveIngredient([FromUri] Ingredient i)
+    {
+      ingredientRepository.SaveData(i);
+      return "ok";
+    }
   }
 }

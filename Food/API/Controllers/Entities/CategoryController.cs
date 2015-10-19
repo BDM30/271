@@ -31,5 +31,15 @@ namespace API.Controllers.Entities
               x.Name == c.Name && x.Name != "")
               select x);
     }
+
+    // если id валидный - то редактирование, иначе создастся новый
+    [HttpGet]
+    [Route("Category/save")]
+    public string SaveCategory([FromUri] Category c)
+    {
+      categoryRepository.SaveData(c);
+      return "ok";
+    }
+
   }
 }

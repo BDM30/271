@@ -31,5 +31,14 @@ namespace API.Controllers.Entities
               || x.RecipeID != r.RecipeID && x.RecipeID != 0)
               select x);
     }
+
+    // если id валидный - то редактирование, иначе создастся новый
+    [HttpGet]
+    [Route("Recipe/save")]
+    public string SaveRecipe([FromUri] Recipe r)
+    {
+      recipeRepository.SaveData(r);
+      return "ok";
+    }
   }
 }

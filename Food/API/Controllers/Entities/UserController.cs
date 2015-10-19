@@ -36,6 +36,15 @@ namespace API.Controllers
           where (x.UserID == user.UserID && x.UserID != 0 || x.Name == user.Name && x.Name != ""
                  || x.Password == user.Password && x.Password != "")
           select x);
-      } 
+      }
+      
+      // если id валидный - то редактирование, иначе создастся новый
+      [HttpGet]
+      [Route("User/save")]
+      public string SaveUser([FromUri] User user)
+      {
+        userRepository.SaveData(user);
+        return "ok";
+      }
   }
 }

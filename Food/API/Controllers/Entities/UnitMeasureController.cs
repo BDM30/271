@@ -31,5 +31,14 @@ namespace API.Controllers.Entities
               x.UnitMeasureID == u.UnitMeasureID && x.UnitMeasureID != 0)
               select x);
     }
+
+    // если id валидный - то редактирование, иначе создастся новый
+    [HttpGet]
+    [Route("UnitMeasure/save")]
+    public string SaveUnitMeasure([FromUri] UnitMeasure um)
+    {
+      unitMeasureRepository.SaveData(um);
+      return "ok";
+    }
   }
 }
