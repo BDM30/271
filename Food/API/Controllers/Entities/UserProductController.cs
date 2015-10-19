@@ -29,7 +29,7 @@ namespace API.Controllers.Entities
       return (from x in userProductRepository.Data
               where (x.UserID == p.UserID && x.UserID != 0 || x.Amount == p.Amount && x.Amount != 0
                      || x.CategoryID == p.CategoryID && x.CategoryID != 0 || 
-                     x.ExpirationDate == p.ExpirationDate && x.ExpirationDate != "" ||
+                     x.ExpirationDate == p.ExpirationDate && x.ExpirationDate != null ||
                      x.ProductID == p.ProductID && x.ProductID != 0 ||
                      x.UserProductID == p.UserProductID && x.UserProductID != 0) 
               select x);

@@ -30,7 +30,7 @@ namespace API.Controllers.Entities
               where (x.AmountDefault == p.AmountDefault && x.AmountDefault != 0 ||
               x.CategoryID == p.CategoryID && x.CategoryID != 0 ||
               x.UnitMeasureID == p.UnitMeasureID && x.UnitMeasureID != 0 ||
-              x.Name == p.Name && x.Name != "" ||
+              x.Name == p.Name && x.Name != null ||
               x.ProductID == p.ProductID && x.ProductID != 0)
               select x);
     }

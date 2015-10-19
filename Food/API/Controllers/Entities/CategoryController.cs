@@ -28,7 +28,7 @@ namespace API.Controllers.Entities
     {
       return (from x in categoryRepository.Data
               where (x.CategoryID == c.CategoryID && x.CategoryID != 0 ||
-              x.Name == c.Name && x.Name != "")
+              x.Name == c.Name && x.Name != null)
               select x);
     }
 

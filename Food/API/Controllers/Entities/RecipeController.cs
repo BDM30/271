@@ -27,8 +27,8 @@ namespace API.Controllers.Entities
     public IEnumerable<Recipe> GetRecipeBy([FromUri] Recipe r)
     {
       return (from x in recipeRepository.Data
-              where (x.Name == r.Name && x.Name != "" || x.ProcessDescription != r.ProcessDescription && x.ProcessDescription != ""
-              || x.RecipeID != r.RecipeID && x.RecipeID != 0)
+              where (x.Name == r.Name && x.Name != null || x.ProcessDescription == r.ProcessDescription && x.ProcessDescription != null
+              || x.RecipeID == r.RecipeID && x.RecipeID != 0)
               select x);
     }
 

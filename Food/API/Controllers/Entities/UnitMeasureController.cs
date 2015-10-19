@@ -27,7 +27,7 @@ namespace API.Controllers.Entities
     public IEnumerable<UnitMeasure> GetUnitMeasureBy([FromUri] UnitMeasure u)
     {
       return (from x in unitMeasureRepository.Data
-              where (x.Name == u.Name && x.Name != "" || x.ShortName == u.ShortName && x.ShortName != "" ||
+              where (x.Name == u.Name && x.Name != null || x.ShortName == u.ShortName && x.ShortName != null ||
               x.UnitMeasureID == u.UnitMeasureID && x.UnitMeasureID != 0)
               select x);
     }
