@@ -5,6 +5,10 @@ using Domain.Entities;
 using System.Linq;
 
 /*
+Котроллер сущности позволяет совершать CRUD операции и в будущем и другие
+*/
+
+/*
 Todo: сделать более рациональную Route System
 */
 

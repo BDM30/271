@@ -1,5 +1,8 @@
-﻿using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+
+/*
+Нужен для выдачи базовой информации о сервере
+*/
 
 namespace API.Controllers
 {

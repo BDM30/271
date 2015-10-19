@@ -2,6 +2,10 @@
 using Domain.Abstract;
 using Domain.Entities;
 
+/*
+Класс реализует паттерн Репозиторий те упрощает и инкапсулирует работу с данными из класса FoodContext
+*/
+
 namespace Domain.Concrete
 {
   public class UnitMeasureRepository : ICommonRepository<UnitMeasure>

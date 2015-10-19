@@ -1,6 +1,10 @@
 ﻿using System.Web.Http;
 using API.Models;
 
+/*
+Для выполения тестовых запросов-ответов
+*/
+
 namespace API.Controllers
 {
   public class TestController : ApiController

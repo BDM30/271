@@ -1,7 +1,8 @@
 ﻿/*
  * Класс для связи Entity Framework с баззой данных
- * содержит коллекцию User
+ * его поля - таблицы в БД
  */
+
 using System.Data.Entity;
 using Domain.Entities;
 

@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
+
+/*
+Котроллер сущности позволяет совершать CRUD операции и в будущем и другие
+*/
 
 namespace API.Controllers.Entities
 {

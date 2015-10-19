@@ -4,6 +4,10 @@ using System.Web.Http;
 using Domain.Abstract;
 using Domain.Entities;
 
+/*
+Котроллер сущности позволяет совершать CRUD операции и в будущем и другие
+*/
+
 namespace API.Controllers.Entities
 {
   public class UnitMeasureController : ApiController
